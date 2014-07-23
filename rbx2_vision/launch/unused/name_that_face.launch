@@ -1,0 +1,8 @@
+<launch>
+
+  <!-- Run the name_that_face.py node and remap the face_position topics  -->
+  <node pkg="rbx2_vision" type="name_that_face.py" name="name_that_face" output="screen">
+    <remap from="face_positions" to="/cob_people_detection/detection_tracker/face_position_array" />
+  </node>
+  
+</launch>

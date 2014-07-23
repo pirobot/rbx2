@@ -1,0 +1,5 @@
+<launch>  
+  <node pkg="rbx2_vision" name="background_foreground" type="background_foreground.py" output="screen">
+    <remap from="input_rgb_image" to="/camera/rgb/image_color"/>
+  </node>
+</launch>

@@ -1,0 +1,11 @@
+<launch>
+  <arg name="robot_name" default="turtlebot"/>
+
+  <node pkg="nodelet" type="nodelet" name="$(arg robot_name)_nodelet_manager" args="manager"/>
+
+  <node pkg="nodelet" type="nodelet" name="cmd_vel_mux"
+        args="load yocs_cmd_vel_mux/CmdVelMuxNodelet $(arg robot_name)_nodelet_manager">
+    <param name="yaml_cfg_file"  value="$(find rbx2_nav)/config/yocs_cmd_vel.yaml"/>
+    <remap from="cmd_vel_mux/output/cmd_vel" to="/cmd_vel"/>
+  </node>
+</launch>

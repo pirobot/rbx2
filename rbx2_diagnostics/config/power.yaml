@@ -1,0 +1,8 @@
+pub_rate: 1.0
+analyzers:
+  power:
+    type: GenericAnalyzer
+    path: 'Power System'
+    timeout: 5.0
+    contains: ['Robot Battery', 'Robot Charge', 'Laptop Battery', 'Laptop Charge']
+

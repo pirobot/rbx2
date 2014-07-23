@@ -1,0 +1,32 @@
+<style>
+  body {
+     font-family:sans-serif narrow;
+     font-size:14pt;
+  }
+
+  fieldset {
+     font-family:sans-serif narrow;
+     font-size:14pt;
+  }
+
+  td {
+     font-family:sans-serif narrow;
+     font-size:14pt;
+  }
+
+  input {
+     font-family:sans-serif narrow;
+     font-size:14pt;
+  }
+
+  #connectButton {
+     font-family:sans-serif narrow;
+     font-size:14pt;
+  }
+
+  .checkbox {
+     width:20px;
+     height:20px;
+  }
+</style>
+

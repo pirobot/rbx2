@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+
+<robot name="xtion" xmlns:xacro="http://ros.org/wiki/xacro">
+
+   <!-- Define a number of dimensions using properties -->
+   <property name="xtion_size_x" value="0.0420" />
+   <property name="xtion_size_y" value="0.1810" />
+   <property name="xtion_size_z" value="0.0480" />
+   
+   <property name="PI" value="3.1415" />
+   
+   <property name="camera_mesh_scale" value="0.0254" />
+        
+   <!-- Define a camera link for an Asus Xtion -->
+   <macro name="camera" params="parent name color *origin">
+      <joint name="${parent}_${name}_joint" type="fixed">
+         <xacro:insert_block name="origin" />
+         <parent link="${parent}_link"/>
+         <child link="${name}_link"/>
+      </joint>
+      <link name="${name}_link">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+               <mesh filename="package://rbx2_description/meshes/xtion.stl" scale="${camera_mesh_scale} ${camera_mesh_scale} ${camera_mesh_scale}" />
+            </geometry>
+            <material name="${color}" />
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <box size="${xtion_size_x} ${xtion_size_y} ${xtion_size_z}"/>
+            </geometry>
+         </collision>
+      </link>
+    
+      <joint name="camera_depth_joint" type="fixed">
+          <origin xyz="0 0.025 0" rpy="0 0 0" />
+          <parent link="camera_link" />
+          <child link="camera_depth_frame" />
+      </joint>
+
+      <link name="camera_depth_frame">
+      <inertial>
+         <mass value="0.000001" />
+         <origin xyz="0 0 0" />
+         <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+            iyy="0.0001" iyz="0.0"
+            izz="0.0001" />
+         </inertial>
+      </link>
+
+      <joint name="camera_depth_optical_joint" type="fixed">
+         <origin xyz="0 0 0" rpy="${-PI/2} 0 ${-PI/2}" />
+         <parent link="camera_depth_frame" />
+         <child link="camera_depth_optical_frame" />
+      </joint>
+
+      <link name="camera_depth_optical_frame">
+         <inertial>
+            <mass value="0.000001" />
+            <origin xyz="0 0 0" />
+            <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+               iyy="0.0001" iyz="0.0"
+               izz="0.0001" />
+         </inertial>
+      </link>
+
+      <joint name="camera_rgb_joint" type="fixed">
+         <origin xyz="0 -0.025 0" rpy="0 0 0" />
+         <parent link="camera_link" />
+         <child link="camera_rgb_frame" />
+      </joint>
+
+      <link name="camera_rgb_frame">
+         <inertial>
+         <mass value="0.000001" />
+         <origin xyz="0 0 0" />
+         <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+            iyy="0.0001" iyz="0.0"
+            izz="0.0001" />
+         </inertial>
+      </link>
+
+      <joint name="camera_rgb_optical_joint" type="fixed">
+         <origin xyz="0 0 0" rpy="${-PI/2} 0 ${-PI/2}" />
+         <parent link="camera_rgb_frame" />
+         <child link="camera_rgb_optical_frame" />
+      </joint>
+
+      <link name="camera_rgb_optical_frame">
+         <inertial>
+            <mass value="0.000001" />
+            <origin xyz="0 0 0" />
+            <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+               iyy="0.0001" iyz="0.0"
+               izz="0.0001" />
+         </inertial>
+      </link>
+  
+   </macro>
+
+</robot>

@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+
+<robot name="pan_tilt_head" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <property name="camera_offset_x" value="0.0" />
+  <property name="camera_offset_y" value="0.0" />
+  <property name="camera_offset_z" value="0.0615" />
+   
+  <property name="camera_mesh_scale" value="1.0" />
+   
+  <xacro:include filename="$(find rbx2_description)/urdf/pi_robot/dynamixel_head_hardware.xacro" />
+  <xacro:include filename="$(find rbx2_description)/urdf/pi_robot/kinect.urdf.xacro" />
+
+  <macro name="head" params="parent name color *origin">
+    <!-- head base joint -->
+    <joint name="${name}_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+    <link name="${name}_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <inertial>
+        <mass value="0.00001" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+
+      <visual>
+        <origin xyz="0 0 0 " rpy="0 0 0" />
+        <geometry>
+           <cylinder length="0.00001" radius="0.01" />
+        </geometry>
+      </visual>
+
+      <collision>
+        <origin xyz="0 0 0 " rpy="0 0 0" />
+        <geometry>
+           <cylinder length="0.00001" radius="0.01" />
+        </geometry>
+      </collision>
+    </link>
+    
+    <!-- head pan joint -->
+    <dynamixel_AX12_fixed parent="head_base" name="head_pan_servo">
+       <origin xyz="0 0 0" rpy="0 ${PI} 0" />
+    </dynamixel_AX12_fixed>
+        
+    <bioloid_F3_head_revolute parent="head_pan_servo" name="head_pan_bracket" joint_name="head_pan" ulimit="2.9" llimit="-2.9" vlimit="1.571" color="${color}">
+       <origin xyz="0 ${AX12_WIDTH/2 + 0.005} 0" rpy="${-PI/2} ${PI/2} ${PI}" />
+    </bioloid_F3_head_revolute>
+    
+    <!--head tilt joint -->
+    <dynamixel_AX12_fixed parent="head_pan_bracket" name="head_tilt_servo">
+       <origin xyz="0 0 ${-AX12_HEIGHT-F10_HEIGHT+0.001}" rpy="0 ${PI} ${PI}"/>
+    </dynamixel_AX12_fixed>
+    
+    <bioloid_F2_head_revolute parent="head_tilt_servo" name="head_tilt_bracket" joint_name="head_tilt" ulimit="2.9" llimit="-2.9" vlimit="1.571" color="${color}" >
+       <origin xyz="0 0 0" rpy="0 0 0" />
+    </bioloid_F2_head_revolute>
+   
+   <!-- Attach the camera -->
+   <camera name="camera" parent="head_tilt_bracket" color="Black">
+      <origin xyz="${camera_offset_x} ${camera_offset_y} ${camera_offset_z}" rpy="0 0 0" />
+   </camera>
+
+ </macro>
+
+</robot>

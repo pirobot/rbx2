@@ -1,0 +1,34 @@
+<launch>
+   <!-- Make sure we are not using simulated time -->
+   <param name="/use_sim_time" value="false" />
+   
+   <!-- Launch the arbotix driver in fake mode by default -->
+   <arg name="sim" default="true" />
+   
+   <!-- If using a real controller, look on /dev/ttyUSB0 by default -->
+   <arg name="port" default="/dev/ttyUSB0" />
+   
+   <!-- Load the URDF/Xacro model of our robot -->
+   <param name="robot_description" command="$(find xacro)/xacro.py '$(find rbx2_description)/urdf/pedestal_pi/pedestal_pi_head_only.xacro'" />
+    
+   <node name="arbotix" pkg="arbotix_python" type="arbotix_driver" clear_params="true" output="screen">
+      <rosparam file="$(find rbx2_dynamixels)/config/arbotix/pedestal_pi_head_only.yaml" command="load" />
+      <param name="sim" value="$(arg sim)" />
+      <param name="port" value="$(arg port)" />
+   </node>
+  
+   <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+      <param name="publish_frequency" type="double" value="20.0" />
+   </node>
+  
+   <!-- Start all servos in a relaxed state -->
+   <node pkg="rbx2_dynamixels" type="arbotix_relax_all_servos.py" name="relax_all_servos" unless="$(arg sim)" />
+   
+   <!-- Load diagnostics -->
+   <node pkg="diagnostic_aggregator" type="aggregator_node" name="diagnostic_aggregator" clear_params="true" unless="$(arg sim)">
+      <rosparam command="load" file="$(find rbx2_dynamixels)/config/head_only_diagnostics.yaml" />
+   </node>
+
+   <node pkg="rqt_robot_monitor" type="rqt_robot_monitor" name="rqt_robot_monitor" unless="$(arg sim)" />
+
+</launch>

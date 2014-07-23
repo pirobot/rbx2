@@ -1,0 +1,26 @@
+<launch>
+  <!-- Make sure we are not using simulated time -->
+  <param name="/use_sim_time" value="false" />
+  
+  <!-- Launch the arbotix driver in fake mode by default -->
+  <arg name="sim" default="true" />
+   
+  <!-- If using a real controller, look on /dev/ttyUSB0 by default -->
+  <arg name="port" default="/dev/ttyUSB0" />
+  
+  <!-- Load the URDF/Xacro model of our robot -->
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find rbx2_description)/urdf/pi_robot/pi_robot_base_only.xacro'" />
+   
+  <!-- Bring up the arbotix driver with a configuration file appropriate to the robot -->
+  <node name="arbotix" pkg="arbotix_python" type="arbotix_driver" clear_params="true" output="screen">
+      <rosparam file="$(find rbx2_bringup)/config/pi_robot_base_only.yaml" command="load" />
+       <param name="sim" value="$(arg sim)" />
+       <param name="port" value="$(arg port)" />
+  </node>
+
+  <!-- Fire up the robot state publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+      <param name="publish_frequency" type="double" value="20.0" />
+  </node>
+  
+</launch>

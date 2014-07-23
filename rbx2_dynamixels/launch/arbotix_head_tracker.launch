@@ -1,0 +1,14 @@
+<launch>
+  <node pkg="rbx2_dynamixels" name="arbotix_head_tracker" type="arbotix_head_tracker.py" output="screen">
+    <remap from="camera_info" to="/camera/rgb/camera_info" />
+    
+     <rosparam>
+       rate: 20
+       gain_pan: 2.0
+       gain_tilt: 2.0
+       default_joint_speed: 0.1
+       max_joint_speed: 1.5
+    </rosparam>
+    
+  </node>
+</launch>

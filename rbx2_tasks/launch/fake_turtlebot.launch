@@ -1,0 +1,53 @@
+<launch>
+
+  <param name="/use_sim_time" value="false" />
+
+  <!-- The runtime (in seconds) of the fake battery -->
+  <arg name="battery_runtime" default="60" />
+  
+  <!-- Set the name of the map yaml file: can be overridden on the command line. -->
+  <arg name="map" default="blank_map.yaml" />
+
+  <!-- Load the URDF/Xacro model of our robot -->
+  <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find rbx1_description)/urdf/turtlebot.urdf.xacro'" />
+   
+  <param name="robot_description" command="$(arg urdf_file)" />
+    
+  <node name="arbotix" pkg="arbotix_python" type="arbotix_driver" clear_params="true" output="screen">
+     <rosparam file="$(find rbx1_bringup)/config/fake_turtlebot_arbotix.yaml" command="load" />
+     <param name="sim" value="true"/>
+  </node>
+  
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+      <param name="publish_frequency" type="double" value="20.0" />
+  </node>
+  
+  <!-- We need a static transforms for the wheels -->
+  <node pkg="tf" type="static_transform_publisher" name="odom_left_wheel_broadcaster" args="0 0 0 0 0 0 /base_link /left_wheel_link 100" />
+  <node pkg="tf" type="static_transform_publisher" name="odom_right_wheel_broadcaster" args="0 0 0 0 0 0 /base_link /right_wheel_link 100" />
+  
+  <!-- Run the map server with a blank map -->
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find rbx2_nav)/maps/$(arg map)" />
+  
+  <!-- The move_base node -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" clear_params="true" output="screen">
+     <rosparam file="$(find rbx2_nav)/config/fake/costmap_common_params.yaml" command="load" ns="global_costmap" />
+     <rosparam file="$(find rbx2_nav)/config/fake/costmap_common_params.yaml" command="load" ns="local_costmap" />
+     <rosparam file="$(find rbx2_nav)/config/fake/local_costmap_params.yaml" command="load" />
+     <rosparam file="$(find rbx2_nav)/config/fake/global_costmap_params.yaml" command="load" />
+     <rosparam file="$(find rbx2_nav)/config/fake/base_local_planner_params.yaml" command="load" />
+     <rosparam file="$(find rbx2_nav)/config/nav_test_params.yaml" command="load" />
+
+  </node>
+  
+  <include file="$(find rbx2_utils)/launch/battery_simulator.launch">
+     <arg name="battery_runtime" value="$(arg battery_runtime)" />
+  </include>
+  
+  <!-- Run fake localization compatible with AMCL output -->
+  <node pkg="fake_localization" type="fake_localization" name="fake_localization" output="screen" />
+      
+  <!-- Run a static transform between /odom and /map -->
+  <node pkg="tf" type="static_transform_publisher" name="odom_map_broadcaster" args="0 0 0 0 0 0 /map /odom 100" />
+  
+</launch>

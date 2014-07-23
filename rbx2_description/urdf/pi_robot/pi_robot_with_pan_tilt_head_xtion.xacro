@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<robot name="pi_robot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+   <!-- Define a number of dimensions using properties -->
+   <property name="torso_offset_x" value="-0.13" />
+   <property name="torso_offset_y" value="0.0" />
+   <property name="torso_offset_z" value="0.088" />
+     
+   <property name="head_offset_x" value="0.0475" />
+   <property name="head_offset_y" value="0.0036" />
+   <property name="head_offset_z" value="0.875" />
+
+   <!-- The following include files set up definitions of parts of the robot body -->
+   <xacro:include filename="$(find rbx2_description)/urdf/materials.urdf.xacro" />
+   <xacro:include filename="$(find rbx2_description)/urdf/pi_robot/pi_base.urdf.xacro" />
+   <xacro:include filename="$(find rbx2_description)/urdf/pi_robot/pi_torso.urdf.xacro" />
+   <xacro:include filename="$(find rbx2_description)/urdf/pi_robot/pi_pan_tilt_head_xtion.urdf.xacro" />
+
+   <!-- Now we can start using the macros included above to define the actual robot -->
+   
+   <!-- Start with the base and wheels -->
+   <base name="base" color="Black"/>
+   
+   <!-- Attach the torso -->
+   <torso name="torso" parent="base" color="Grey">
+      <origin xyz="${torso_offset_x} ${torso_offset_y} ${torso_offset_z}" rpy="0 0 0" />
+   </torso>
+
+   <!-- Attach the pan and tilt head -->
+   <head name="head_base" parent="torso" color="White">
+      <origin xyz="${head_offset_x} ${head_offset_y} ${head_offset_z}" rpy="0 0 ${PI}" />
+   </head>
+
+</robot>
+
+

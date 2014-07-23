@@ -1,0 +1,24 @@
+<launch>
+  <arg name="fake" default="False" />
+  <arg name="controller_type" default="dynamixel_motor" />
+  <arg name="tracker_type" default="speed" />
+
+  <node pkg="rbx2_dynamixels" name="head_tracker" type="head_tracker.py" output="screen">
+    <remap from="target_topic" to="/target_pose" />
+    
+    <param name="fake" value="$(arg fake)" />
+    <param name="controller_type" value="$(arg controller_type)" />
+    <param name="tracker_type" value="$(arg tracker_type)" />
+    
+     <rosparam>
+       rate: 20
+       gain_pan: 1.5
+       gain_tilt: 1.5
+       max_joint_speed: 1.5
+       speed_update_threshold: 0.1
+       lead_target_angle: 0.5
+       #lead_target_angle: 0.05
+    </rosparam>
+    
+  </node>
+</launch>

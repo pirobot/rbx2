@@ -1,0 +1,6 @@
+<launch>
+   <node pkg="rbx2_utils" name="pub_tf_frame" type="pub_tf_frame.py" output="screen" >
+     <param name="rate" value="20" />
+     <param name="target_frame" value="right_gripper_link" />
+   </node>
+</launch>

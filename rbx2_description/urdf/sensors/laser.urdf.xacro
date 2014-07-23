@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+
+<robot name="laser" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- A box-and-cylinder model of the Hokuyo URG-04LX-UG01 laser scanner -->
+     
+  <!-- Define the laser macro -->
+  <macro name="laser" params="parent color *origin">
+    <joint name="${parent}_laser_bottom_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}_link"/>
+      <child link="base_laser_bottom"/>
+    </joint>
+    
+   <link name="base_laser_bottom">
+	 <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.05 0.05 0.041" />
+        </geometry>
+       <material name="${color}" />        
+     </visual>
+     <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.05 0.05 0.041" />
+      </geometry>
+       </collision>
+	 <inertial>
+       <mass value="0.1" />
+         <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                   iyy="0.001" iyz="0.0"
+                   izz="0.001" />                     
+      </inertial>
+   </link>
+  
+   <link name="base_laser_middle">
+	 <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+		<geometry>
+          <cylinder length="0.0115" radius=".02"/>
+        </geometry>
+        <material name="dark_grey">
+           <color rgba="0.2 0.2 0.2 1.0"/>
+        </material>        
+     </visual>
+     <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+		 <geometry>
+          <cylinder length="0.0115" radius=".02"/>
+         </geometry>
+       </collision>
+	 <inertial>
+       <mass value="0.1" />
+         <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                   iyy="0.001" iyz="0.0"
+                   izz="0.001" />                     
+      </inertial>
+   </link>
+   
+   <joint name="base_laser_middle_joint" type="fixed">
+     <parent link="base_laser_bottom"/>
+     <child link="base_laser_middle" />
+     <origin xyz="0 0 0.02625" rpy="0 0 0" />
+   </joint>
+   
+   <link name="base_laser">
+	 <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+		<geometry>
+          <cylinder length="0.0175" radius=".0185"/>
+        </geometry>
+        <material name="red">
+           <color rgba="0.8 0.1 0.1 1.0"/>
+        </material>          
+     </visual>
+     <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+		 <geometry>
+          <cylinder length="0.0175" radius=".0185"/>
+         </geometry>
+       </collision>
+	 <inertial>
+       <mass value="0.1" />
+         <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                   iyy="0.001" iyz="0.0"
+                   izz="0.001" />                     
+      </inertial>
+   </link>
+   
+   <joint name="base_laser_joint" type="fixed">
+     <parent link="base_laser_middle"/>
+     <child link="base_laser" />
+     <origin xyz="0 0 0.0145" rpy="0 0 0" />
+   </joint>
+   
+  </macro>
+ 
+ </robot>
+ 

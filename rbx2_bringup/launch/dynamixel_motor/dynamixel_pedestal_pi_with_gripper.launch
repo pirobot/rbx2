@@ -1,0 +1,113 @@
+<launch>
+
+   <arg name="port" default="/dev/ttyUSB0" />
+
+   <arg name="dynamixel_namespace" value="/" />
+   
+   <!-- Load the URDF/Xacro model of our robot -->
+   <param name="robot_description" command="$(find xacro)/xacro.py '$(find rbx2_description)/urdf/pedestal_pi/pedestal_pi_with_gripper.xacro'" />
+	
+   <rosparam ns="$(arg dynamixel_namespace)" file="$(find rbx2_dynamixels)/config/dynamixel_motor/pedestal_pi_with_gripper.yaml" command="load"/>
+
+   <!-- Publish the robot state -->
+     <node name="rob_st_pub" pkg="robot_state_publisher" type="state_publisher">
+       <param name="publish_frequency" value="30.0"/>
+   </node>
+
+   <!-- Start the Dynamixel low-level driver manager with parameters -->
+   <node ns="$(arg dynamixel_namespace)" name="dynamixel_manager" pkg="dynamixel_controllers" output="screen" 
+      type="controller_manager.py" required="true">
+      
+      <rosparam command="delete" param="/dynamixel" />
+      <rosparam command="delete" param="/dynamixel_manager" />
+      <rosparam command="delete" param="/joints" />
+      <rosparam command="delete" param="/diagnostic_aggregator" />
+      
+      <!-- param name="serial_ports/dynamixels/port_name" value="$(arg port)" /-->
+      
+      <rosparam>
+         namespace: pi_dynamixel_manager
+         diagnostics_rate: 1
+         serial_ports:
+            usb2dynamixel:
+               port_name: /dev/ttyUSB0
+               baud_rate: 1000000
+               min_motor_id: 1
+               max_motor_id: 9
+               update_rate: 20
+               diagnostics:
+                  error_level_temp: 55
+                  warn_level_temp: 45
+      </rosparam>
+   </node>
+   
+  <!-- Start all Pi Robot joint controllers -->
+   <node ns="$(arg dynamixel_namespace)" pkg="dynamixel_controllers" name="dynamixel_controller_spawner" output="screen" 
+   type="controller_spawner.py"
+        args="--manager=pi_dynamixel_manager
+              --port=usb2dynamixel
+              --type=simple
+        right_arm_shoulder_pan_joint
+        right_arm_shoulder_lift_joint              
+        right_arm_shoulder_roll_joint
+        right_arm_elbow_flex_joint
+        right_arm_forearm_flex_joint
+        right_arm_wrist_flex_joint
+        right_gripper_finger_joint
+        head_pan_joint
+        head_tilt_joint"
+   />
+
+   <!-- Start the right arm trajectory controller -->
+   <node ns="$(arg dynamixel_namespace)" pkg="dynamixel_controllers" name="right_arm_controller" type="controller_spawner.py" output="screen" 
+      args="--manager=pi_dynamixel_manager
+            --type=meta
+      right_arm_controller
+      right_arm_shoulder_pan_joint
+      right_arm_shoulder_lift_joint
+      right_arm_shoulder_roll_joint
+      right_arm_elbow_flex_joint
+      right_arm_forearm_flex_joint
+      right_arm_wrist_flex_joint"
+   />
+       
+   <!-- Start the head trajectory controller -->
+   <node ns="$(arg dynamixel_namespace)" pkg="dynamixel_controllers" name="head_controller" type="controller_spawner.py" output="screen" 
+      args="--manager=pi_dynamixel_manager
+            --type=meta
+      head_controller
+      head_pan_joint
+      head_tilt_joint"
+  />
+        
+   <!-- Start the Dynamixel Joint States Publisher -->
+   <node ns="$(arg dynamixel_namespace)" pkg="rbx2_dynamixels" name="dynamixel_joint_states_publisher" type="dynamixel_joint_state_publisher.py">
+      <param name="rate" value="20" />
+   </node>
+   
+   <!-- Run a separate controller for the one sided gripper -->
+   <node name="right_gripper_controller" pkg="arbotix_controllers" type="gripper_controller" output="screen">
+      <rosparam>
+         model: singlesided
+         invert: true
+         center: 0.0
+         pad_width: 0.01
+         finger_length: 0.1653
+         joint: right_gripper_finger_joint
+      </rosparam>
+   </node>
+
+   <!-- Load diagnostics -->
+   <node pkg="diagnostic_aggregator" type="aggregator_node" name="diagnostic_aggregator" >
+      <rosparam command="load" file="$(find rbx2_dynamixels)/config/diagnostics.yaml" />
+   </node>
+
+   <node pkg="rqt_robot_monitor" type="rqt_robot_monitor" name="robot_monitor" />
+   
+   <!-- Start all servos in a relaxed state -->
+   <node ns="$(arg dynamixel_namespace)" pkg="rbx2_dynamixels" type="relax_all_servos.py" name="relax_all_servos" />
+  
+   <!-- Publish a static transform between the robot base and the world frame -->
+   <node pkg="tf" type="static_transform_publisher" name="world_base_broadcaster" args="0 0 0 0 0 0 /world /base_link 100" />
+
+</launch>

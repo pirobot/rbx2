@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+
+<robot name="xtion" xmlns:xacro="http://ros.org/wiki/xacro">
+
+   <!-- Define a number of dimensions using properties -->
+   <property name="xtion_body_x" value="0.0420" />
+   <property name="xtion_body_y" value="0.1810" />
+   <property name="xtion_body_z" value="0.025" />
+   
+   <property name="xtion_base_x" value="0.040" />
+   <property name="xtion_base_y" value="0.099" />
+   <property name="xtion_base_z" value="0.002" />
+   
+   <property name="xtion_base_post_height" value="0.020" />
+   <property name="xtion_base_post_radius" value="0.00675" />
+   
+   <property name="PI" value="3.1415" />
+           
+   <!-- Define a box-shaped camera link for the Asus Xtion -->
+   <macro name="camera" params="parent name color *origin">
+      <joint name="${parent}_${name}_joint" type="fixed">
+         <xacro:insert_block name="origin" />
+         <parent link="${parent}_link"/>
+         <child link="${name}_base_link"/>
+      </joint>
+      
+      <link name="${name}_base_link">
+         <visual>
+            <origin xyz="0 0.0 0.0" rpy="0 0 0" />
+            <geometry>
+               <box size="${xtion_base_x} ${xtion_base_y} ${xtion_base_z}"/>
+            </geometry>
+            <material name="${color}" />
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <box size="${xtion_base_x} ${xtion_base_y} ${xtion_base_z}"/>
+            </geometry>
+         </collision>
+      </link>
+      
+      <joint name="${name}_base_post_joint" type="fixed">
+         <origin xyz="0 0 ${(xtion_base_z + xtion_base_post_height)/2}" rpy="0 0 0" />
+         <parent link="${name}_base_link" />
+         <child link="${name}_base_post_link" />
+      </joint>
+      
+      <link name="${name}_base_post_link">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <cylinder radius="${xtion_base_post_radius}" length="${xtion_base_post_height}"/>
+            </geometry>
+            <material name="${color}" />
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <cylinder radius="${xtion_base_post_radius}" length="${xtion_base_post_height}"/>
+            </geometry>
+         </collision>
+      </link>
+    
+      <joint name="${name}_base_joint" type="fixed">
+         <origin xyz="0 0 ${(xtion_base_post_height + xtion_body_z)/2}" rpy="0 0 0" />
+         <parent link="${name}_base_post_link" />
+         <child link="${name}_link" />
+      </joint>
+      
+      <link name="${name}_link">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <box size="${xtion_body_x} ${xtion_body_y} ${xtion_body_z}"/>
+            </geometry>
+            <material name="${color}" />
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <box size="${xtion_body_x} ${xtion_body_y} ${xtion_body_z}"/>
+            </geometry>
+         </collision>
+      </link>
+    
+      <joint name="${name}_depth_joint" type="fixed">
+         <origin xyz="0 0.0125 0" rpy="0 0 0" />
+          <parent link="${name}_link" />
+          <child link="${name}_depth_frame" />
+      </joint>
+
+      <link name="${name}_depth_frame">
+      <inertial>
+         <mass value="0.000001" />
+         <origin xyz="0 0 0" />
+         <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+            iyy="0.0001" iyz="0.0"
+            izz="0.0001" />
+         </inertial>
+      </link>
+
+      <joint name="${name}_depth_optical_joint" type="fixed">
+         <origin xyz="0 0 0" rpy="${-PI/2} 0 ${-PI/2}" />
+         <parent link="${name}_depth_frame" />
+         <child link="${name}_depth_optical_frame" />
+      </joint>
+
+      <link name="${name}_depth_optical_frame">
+         <inertial>
+            <mass value="0.000001" />
+            <origin xyz="0 0 0" />
+            <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+               iyy="0.0001" iyz="0.0"
+               izz="0.0001" />
+         </inertial>
+      </link>
+
+      <joint name="${name}_rgb_joint" type="fixed">
+         <origin xyz="0 -0.0125 0" rpy="0 0 0" />
+         <parent link="${name}_link" />
+         <child link="${name}_rgb_frame" />
+      </joint>
+
+      <link name="${name}_rgb_frame">
+         <inertial>
+         <mass value="0.000001" />
+         <origin xyz="0 0 0" />
+         <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+            iyy="0.0001" iyz="0.0"
+            izz="0.0001" />
+         </inertial>
+      </link>
+
+      <joint name="${name}_rgb_optical_joint" type="fixed">
+         <origin xyz="0 0 0" rpy="${-PI/2} 0 ${-PI/2}" />
+         <parent link="${name}_rgb_frame" />
+         <child link="${name}_rgb_optical_frame" />
+      </joint>
+
+      <link name="${name}_rgb_optical_frame">
+         <inertial>
+            <mass value="0.000001" />
+            <origin xyz="0 0 0" />
+            <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+               iyy="0.0001" iyz="0.0"
+               izz="0.0001" />
+         </inertial>
+      </link>
+  
+   </macro>
+
+</robot>

@@ -1,0 +1,14 @@
+pub_rate: 1.0 # Optional
+base_path: '' # Optional, prepended to all diagnostic output
+analyzers:
+  joints:
+    type: GenericAnalyzer
+    path: 'Joints'
+    timeout: 5.0
+    contains: '_joint'
+  power:
+    type: GenericAnalyzer
+    path: 'Power System'
+    timeout: 5.0
+    contains: ['Robot Battery', 'Robot Charge', 'Laptop Battery', 'Laptop Charge']
+

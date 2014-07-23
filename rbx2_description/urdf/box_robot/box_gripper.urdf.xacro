@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+
+<robot name="gripper" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <property name="PI" value="3.14159"/>
+
+  <macro name="gripper" params="side reflect parent color *origin"> 
+
+    <!-- gripper joint -->
+    <dynamixel_AX12_fixed parent="${parent}" name="${side}_gripper_base">
+      <origin xyz="0 0 ${-AX12_DEPTH/2 + 0.001}" rpy="0 ${PI/2} ${PI}" />
+    </dynamixel_AX12_fixed>
+
+    <!-- finger 1 -->
+    <joint name="${side}_gripper_finger_joint" type="revolute">
+      <origin xyz="0 0 0.025" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="1.0" velocity="3.14" lower="-0.8" upper="0.5" />
+      <parent link="${side}_gripper_base_link"/>
+      <child link="${side}_gripper_active_finger_bracket_link" />
+    </joint>
+    
+    <link name="${side}_gripper_active_finger_bracket_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+      
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="${F2_DEPTH} ${F2_HEIGHT} ${F2_WIDTH}"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+      
+      <collision>
+        <origin xyz="0.0 0.0 0.00775" rpy="0 0 0" />
+        <geometry>
+          <box size="${F2_DEPTH} ${F2_HEIGHT} ${F2_WIDTH}"/>
+        </geometry>
+      </collision>
+    </link>
+    
+    <finger parent="${side}_gripper_active_finger_bracket" name="${side}_gripper_active_finger" color="${color}">
+      <origin xyz="0 0 ${F2_DEPTH - 0.0055}" rpy="0 0 0" />
+    </finger>
+
+    <!-- finger 2 -->
+    <bioloid_F3_fixed parent="${side}_gripper_base" name="${side}_gripper_static_finger_bracket" color="${color}">
+      <origin xyz="0 0 ${-AX12_WIDTH + 0.006}" rpy="0 ${PI} 0" />
+    </bioloid_F3_fixed>
+    
+    <finger parent="${side}_gripper_static_finger_bracket" name="${side}_gripper_static_finger" color="${color}">
+      <origin xyz="0 0 0.004" rpy="0 0 ${PI}" />
+    </finger>
+    
+    <!-- Planning link and joint for the right gripper -->
+    <joint name="${side}_gripper_joint" type="fixed">
+      <axis xyz="0 0 1" />
+      <origin xyz="0.05 0.0 -0.0375" rpy="${PI/2} 0 0"/>
+      <parent link="${side}_gripper_static_finger_link"/>
+      <child link="${side}_gripper_link"/>
+    </joint>
+    
+    <link name="${side}_gripper_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+           <box size="0.001 0.0005 0.0005"/>
+        </geometry>
+      </visual>
+    </link>
+
+   </macro>
+</robot>

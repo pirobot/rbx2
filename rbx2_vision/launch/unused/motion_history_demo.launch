@@ -1,0 +1,5 @@
+<launch>  
+  <node pkg="rbx2_vision" name="motion_history_demo" type="motion_history_demo.py" output="screen">
+    <remap from="input_rgb_image" to="/camera/rgb/image_color"/>
+  </node>
+</launch>

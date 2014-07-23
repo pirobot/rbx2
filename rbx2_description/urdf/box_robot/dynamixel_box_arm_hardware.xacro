@@ -1,0 +1,438 @@
+<?xml version="1.0"?>
+
+<robot name="arm_hardware" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <property name="PI" value="3.14159"/>
+  <property name="DYNAMIXEL_MESH_SCALE" value="0.001"/>
+  
+  <property name="F2_DEPTH" value="0.0245"/>
+  <property name="F2_HEIGHT" value="0.0480"/>
+  <property name="F2_WIDTH" value="0.0380"/>
+  
+  <property name="F3_WIDTH" value="0.038"/>
+  <property name="F3_HEIGHT" value="0.009"/>
+  <property name="F3_DEPTH" value="0.025"/>
+
+  <property name="F4_WIDTH" value="0.0480"/>
+  <property name="F4_HEIGHT" value="0.0625"/>
+  <property name="F4_DEPTH" value="0.0245"/>
+  
+  <property name="F9_DEPTH" value="0.025"/>
+  
+  <property name="F10_WIDTH" value="0.038"/>
+  <property name="F10_HEIGHT" value="0.004"/>
+  <property name="F10_DEPTH" value="0.025"/>  
+
+  <property name="AX12_HEIGHT" value="0.0385"/>
+  <property name="AX12_WIDTH" value="0.035"/>
+  <property name="AX12_DEPTH" value="0.049"/>
+  
+  <macro name="bioloid_F10_fixed" params="parent name color *origin">
+    <joint name="${name}_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+
+      <visual>
+        <origin xyz=" 0 0 0 " rpy="0 0 0" />
+        <geometry>
+          <box size="${F10_DEPTH} ${F10_WIDTH} ${F10_HEIGHT}"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+        <geometry>
+          <box size="${F10_DEPTH} ${F10_WIDTH} ${F10_HEIGHT}"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+  
+  <macro name="bioloid_F10_revolute" params="parent name color llimit ulimit vlimit *origin *axis">
+    <joint name="${name}_joint" type="revolute">
+      <xacro:insert_block name="origin" />
+      <xacro:insert_block name="axis" />
+      <limit effort="1.0" velocity="${vlimit}" lower="${llimit}" upper="${ulimit}" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+
+      <visual>
+        <origin xyz=" 0 0 0 " rpy="0 0 0" />
+        <geometry>
+          <box size="${F10_DEPTH} ${F10_WIDTH} ${F10_HEIGHT}"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+        <geometry>
+          <box size="${F10_DEPTH} ${F10_WIDTH} ${F10_HEIGHT}"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+  
+  <macro name="bioloid_F2_fixed" params="parent name color *origin">
+    <joint name="${name}_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+
+      <visual>
+        <origin xyz=" 0 0 0 " rpy="0 0 0" />
+        <geometry>
+          <box size="${F2_DEPTH} ${F2_HEIGHT} ${F2_WIDTH}"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+
+      <collision>
+        <origin xyz="0.0 0.0 0.00775" rpy="0 0 0" />
+        <geometry>
+          <box size="${F2_DEPTH} ${F2_HEIGHT} ${F2_WIDTH}"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+  
+  <macro name="bioloid_F2_revolute" params="parent name color llimit ulimit vlimit *origin *axis">
+    <joint name="${name}_joint" type="revolute">
+      <xacro:insert_block name="origin" />
+      <xacro:insert_block name="axis" />
+      <limit effort="1.0" velocity="${vlimit}" lower="${llimit}" upper="${ulimit}" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+
+      <visual>
+        <origin xyz=" 0 0 0 " rpy="0 0 0" />
+        <geometry>
+          <box size="${F2_DEPTH} ${F2_HEIGHT} ${F2_WIDTH}"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+
+      <collision>
+        <origin xyz="0.0 0.0 0.00775" rpy="0 0 0" />
+        <geometry>
+          <box size="${F2_DEPTH} ${F2_HEIGHT} ${F2_WIDTH}"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+
+
+  <macro name="finger" params="parent name color *origin">
+    <joint name="${name}_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+
+      <visual>
+        <origin xyz=" 0 0 0 " rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://rbx2_description/meshes/finger.stl" scale="${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE}"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+
+      <collision>
+        <origin xyz="0.02645 0.0 -0.00655" rpy="0 0 0" />
+        <geometry>
+          <box size="0.0783 0.03801 0.0193"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+
+  <macro name="bioloid_F3_fixed" params="parent name color *origin">
+    <joint name="${name}_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+
+      <visual>
+        <origin xyz=" 0 0 0 " rpy="0 0 0" />
+        <geometry>
+           <box size="${F3_DEPTH} ${F3_WIDTH} ${F3_HEIGHT}"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+
+      <collision>
+        <origin xyz="0.0 0.0 -0.0045" rpy="0 0 0" />
+        <geometry>
+           <box size="${F3_DEPTH} ${F3_WIDTH} ${F3_HEIGHT}"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+  
+  <macro name="bioloid_F3_revolute" params="parent name color llimit ulimit vlimit *origin">
+    <joint name="${name}_joint" type="revolute">
+      <xacro:insert_block name="origin" />
+      <axis xyz="0 0 -1"/>
+      <limit effort="1.0" velocity="${vlimit}" lower="${llimit}" upper="${ulimit}" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+
+      <visual>
+        <origin xyz=" 0 0 0 " rpy="0 0 0" />
+        <geometry>
+           <box size="${F3_DEPTH} ${F3_WIDTH} ${F3_HEIGHT}"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+
+      <collision>
+        <origin xyz="0.0 0.0 -0.0045" rpy="0 0 0" />
+        <geometry>
+           <box size="${F3_DEPTH} ${F3_WIDTH} ${F3_HEIGHT}"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+  
+  <macro name="bioloid_F9_fixed" params="parent name color *origin">
+    <joint name="${name}_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+
+      <visual>
+        <origin xyz=" 0 0 0 " rpy="0 0 0" />
+        <geometry>
+          <box size="0.025 0.025 0.025"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+
+      <collision>
+        <origin xyz="0.0 0.0 -0.0045" rpy="0 0 0" />
+        <geometry>
+          <box size="0.025 0.025 0.025"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+  
+  <macro name="bioloid_F11_fixed" params="parent name color *origin">
+    <joint name="${name}_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+
+      <visual>
+        <origin xyz=" 0 0 0 " rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://rbx2_description/meshes/F11.stl" scale="${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE}"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+
+      <collision>
+        <origin xyz="0 0.028 0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.030 0.056 0.032"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+
+  <macro name="dynamixel_AX12_fixed" params="parent name *origin">
+    <joint name="${name}_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="${AX12_HEIGHT} ${AX12_WIDTH} ${AX12_DEPTH}"/>
+        </geometry>
+        <material name="Black"/>
+      </visual>
+
+      <collision>
+        <origin xyz="0 0 -0.01241" rpy="0 0 0" />
+        <geometry>
+          <box size="${AX12_HEIGHT} ${AX12_WIDTH} ${AX12_DEPTH}"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+  
+  <macro name="dynamixel_AX12_revolute" params="parent name llimit ulimit vlimit *origin *axis">
+    <joint name="${name}_joint" type="revolute">
+      <xacro:insert_block name="origin" />
+      <xacro:insert_block name="axis" />
+      <limit effort="1.0" velocity="${vlimit}" lower="${llimit}" upper="${ulimit}" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+
+      <visual>
+        <origin xyz=" 0 0 0 " rpy="0 0 0" />
+        <geometry>
+          <box size="${AX12_HEIGHT} ${AX12_WIDTH} ${AX12_DEPTH}"/>
+        </geometry>
+         <material name="Black"/>
+      </visual>
+
+      <collision>
+        <origin xyz="0.0 0.0 -0.01241" rpy="0 0 0" />
+        <geometry>
+          <box size="${AX12_HEIGHT} ${AX12_WIDTH} ${AX12_DEPTH}"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+
+
+  <macro name="bioloid_F4_revolute" params="parent name color llimit ulimit vlimit *origin">
+    <joint name="${name}_joint" type="revolute">
+      <xacro:insert_block name="origin" />
+      <axis xyz="0 1 0"/>
+      <limit effort="1.0" velocity="${vlimit}" lower="${llimit}" upper="${ulimit}" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+
+      <visual>
+        <origin xyz=" 0 0 0 " rpy="0 0 0" />
+        <geometry>
+          <box size="${F4_DEPTH} ${F4_WIDTH} ${F4_HEIGHT}"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+
+      <collision>
+        <origin xyz="0.0 0.0 0.0215" rpy="0 0 0" />
+        <geometry>
+          <box size="${F4_DEPTH} ${F4_WIDTH} ${F4_HEIGHT}"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+
+</robot>

@@ -1,0 +1,26 @@
+<package>
+  <name>rbx2_gui</name>
+  <version>0.1.0</version>
+
+  <description>ROS By Example Vol 2 - Rosbridge Robot GUI</description>
+
+  <maintainer email="patrick@pirobot.org">Patrick Goebel</maintainer>
+  <license>BSD</license>
+  <url type="website">http://ros.org/wiki/rbx2_gui</url>
+  <url type="bugtracker">https://github.com/pirobot/rbx2/issues</url>
+  <author email="patrick@pirobot.org">Patrick Goebel</author>
+
+  <!-- Dependencies which this package needs to build itself. -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- Dependencies needed to compile this package. -->
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>rosbridge_server</build_depend>
+
+  <!-- Dependencies needed after this package is compiled. -->
+  <run_depend>roscpp</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>rosbridge_server</run_depend>
+
+</package>

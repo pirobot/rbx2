@@ -1,0 +1,45 @@
+<package>
+  <name>rbx2_dynamixels</name>
+  <version>0.1.0</version>
+  <description>ROS by Example Vol 2 - Dynamixels</description>
+
+  <maintainer email="patrick@pirobot.org">Patrick Goebel</maintainer>
+  <license>BSD</license>
+  <url type="website">http://ros.org/wiki/rbx2_dynamixels</url>
+  <url type="bugtracker">https://github.com/pirobot/rbx2/issues</url>
+  <author email="patrick@pirobot.org">Patrick Goebel</author>
+
+  <!-- Dependencies which this package needs to build itself. -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- Dependencies needed to compile this package. -->
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>dynamixel_controllers</build_depend>
+  <build_depend>dynamixel_driver</build_depend>
+  <build_depend>dynamixel_msgs</build_depend>
+  <build_depend>arbotix_msgs</build_depend>
+
+  <!-- Dependencies needed after this package is compiled. -->
+  <run_depend>roscpp</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>dynamixel_controllers</run_depend>
+  <run_depend>dynamixel_driver</run_depend>
+  <run_depend>dynamixel_msgs</run_depend>
+  <run_depend>arbotix_msgs</run_depend>  
+
+  <!-- Dependencies needed only for running tests. -->
+  <!-- <test_depend>roscpp</test_depend> -->
+  <!-- <test_depend>rospy</test_depend> -->
+  <!-- <test_depend>sensor_msgs</test_depend> -->
+  <!-- <test_depend>std_msgs</test_depend> -->
+  <!-- <test_depend>dynamixel_controllers</test_depend> -->
+  <!-- <test_depend>dynamixel_driver</test_depend> -->
+  <!-- <test_depend>dynamixel_msgs</test_depend> -->
+  <!-- <test_depend>arbotix_msgs</test_depend> -->
+
+</package>

@@ -1,0 +1,5 @@
+<launch>  
+  <node pkg="rbx2_vision" name="motion_detection" type="motion_detection.py" output="screen">
+    <remap from="input_rgb_image" to="/camera/rgb/image_color"/>
+  </node>
+</launch>

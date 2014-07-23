@@ -1,0 +1,20 @@
+controller_list:
+  - name: right_arm_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+      - right_arm_shoulder_pan_joint
+      - right_arm_shoulder_lift_joint
+      - right_arm_shoulder_roll_joint
+      - right_arm_elbow_flex_joint
+      - right_arm_forearm_flex_joint
+      - right_arm_wrist_flex_joint
+  - name: head_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+      - head_pan_joint
+      - head_tilt_joint
+

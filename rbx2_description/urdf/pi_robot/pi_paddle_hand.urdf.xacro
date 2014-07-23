@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<robot name="paddle_hand" xmlns:xacro="http://ros.org/wiki/xacro">
+
+   <macro name="hand" params="side reflect parent color *origin"> 
+
+    <!-- hand joint -->
+    <joint name="${side}_hand_joint" type="fixed">
+      <origin xyz="0 0 ${-AX12_WIDTH/2}" rpy="1.570795 0 0"/>
+      <parent link="${parent}_link	"/>
+      <child link="${side}_hand_link"/>
+    </joint>
+    
+    <link name="${side}_hand_link">
+       <inertial>
+         <mass value="0.00001"/>
+         <origin xyz="0 0 0"/>
+         <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+       </inertial>
+       
+       <visual>
+          <origin rpy="0 0 0" xyz=" 0 0 0 "/>
+          <geometry>
+             <mesh filename="package://rbx2_description/meshes/F11.stl" scale="${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE}"/>
+          </geometry>
+          <material name="LightGray"/>
+       </visual>
+       
+       <collision>
+          <origin rpy="0 0 0" xyz="0 0.028 0"/>
+          <geometry>
+            <box size="0.030 0.056 0.032"/>
+           </geometry>
+        </collision>
+     </link>
+
+   </macro>
+</robot>

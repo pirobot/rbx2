@@ -1,0 +1,7 @@
+\subsubsection parameters ROS parameters
+
+Reads and maintains the following parameters on the ROS server
+
+- \b "~battery_runtime" : \b [int] Battery runtime in seconds min: 0, default: 30, max: 7200
+- \b "~set_battery_level" : \b [int] Set battery level min: 0, default: 100, max: 100
+

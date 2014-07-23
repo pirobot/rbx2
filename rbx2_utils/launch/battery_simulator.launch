@@ -1,0 +1,8 @@
+<launch>
+   <arg name="battery_runtime" default="60"/> 
+
+   <node pkg="rbx2_utils" name="battery_simulator" type="battery_simulator.py" output="screen" clear_params="true">
+     <param name="rate" value="5" />
+     <param name="battery_runtime" value="$(arg battery_runtime)" />
+   </node>
+</launch>

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="using_nodelets" value="true"/>
+  <arg name="start_manager" default="false"/>
+
+  <include file="$(find rbx2_vision)/launch/people_detection.launch">
+    <arg name="using_nodelets" value="$(arg using_nodelets)"/>
+    <arg name="start_manager" value="$(arg start_manager)"/>
+  </include>
+
+  <!-- Openni people segmentation and tracker - adapted to publish the segmented image (does not work upside down, i.e. when robot is watching backwards) (comment out if you do not use the openni-tracker) -->
+  <!-- <node pkg="cob_people_detection" ns="cob_people_detection/openni_tracker" type="openni_tracker" name="openniTrackerNode" output="screen"/> -->
+
+  <!-- nodelet manager  (starts somewhere else) -->
+  <!-- <node pkg="nodelet" type="nodelet" name="nodelet_manager_people_detection"  args="manager" output="screen"/> -->
+
+  <!-- kinect image flip nodelet - flips kinect images if robot is looking backwards -->
+  <!--node pkg="nodelet" ns="cam3d" type="nodelet" name="CobKinectImageFlipNodelet" args="load ipa_CameraSensors/CobKinectImageFlipNodelet /nodelet_manager_people_detection" output="screen">
+    <remap from="pointcloud" to="/cam3d/depth_registered/points"/>
+    <remap from="colorimage" to="/cam3d/rgb/image_color"/>
+  </node-->
+
+  <!-- face detection and recognition nodelet (detects faces in range and color image and publishes their positions) -->
+  <!--rosparam command="load" ns="cob_people_detection/face_detection" file="$(find cob_people_detection)/ros/launch/face_detection_params.yaml"/>
+  <node pkg="nodelet" ns="cob_people_detection/face_detection" type="nodelet" name="CobFaceDetectionNodelet" args="load ipa_PeopleDetector/CobFaceDetectionNodelet /nodelet_manager_people_detection" output="screen">
+    <remap from="pointcloud" to="/cam3d/depth/upright/points"/>
+    <remap from="colorimage" to="/cam3d/rgb/upright/image_color"/>
+	
+    <param name="data_directory" type="string" value="$(find cob_people_detection)/common/files/windows/"/>
+  </node-->
+
+  <!-- People detection and tracking nodelet (fuses results from face detection/recognition and people segmentation, basic tracking functions) -->
+  <!--rosparam command="load" ns="cob_people_detection" file="$(find cob_people_detection)/ros/launch/people_detection_params.yaml"/>
+  <node pkg="nodelet" ns="cob_people_detection" type="nodelet" name="CobPeopleDetectionNodelet" args="load ipa_PeopleDetector/CobPeopleDetectionNodelet /nodelet_manager_people_detection" output="screen" >
+    <remap from="people_segmentation_image" to="/cob_people_detection/openni_tracker/people_segmentation_image"/>
+    <remap from="colorimage" to="/cam3d/rgb/upright/image_color"/>
+    <remap from="face_position_array_in" to="/cob_people_detection/face_detection/face_position_array"/>
+  </node-->
+
+</launch>

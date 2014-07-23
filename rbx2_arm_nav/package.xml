@@ -1,0 +1,49 @@
+<package>
+  <name>rbx2_arm_nav</name>
+  <version>0.1.0</version>
+
+  <description>ROS By Example Vol 2 - Arm Navigation</description>
+
+  <maintainer email="patrick@pirobot.org">Patrick Goebel</maintainer>
+  <license>BSD</license>
+  <url type="website">http://ros.org/wiki/rbx2_arm_nav</url>
+  <url type="bugtracker">https://github.com/pirobot/rbx2/issues</url>
+  <author email="patrick@pirobot.org">Patrick Goebel</author>
+
+  <!-- Dependencies which this package needs to build itself. -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- Dependencies needed to compile this package. -->
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>std_srvs</build_depend>
+  <build_depend>actionlib</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>diagnostic_msgs</build_depend>
+  <build_depend>trajectory_msgs</build_depend>
+  <build_depend>control_msgs</build_depend>
+  <build_depend>shape_msgs</build_depend>
+  <build_depend>moveit_msgs</build_depend>
+  <build_depend>manipulation_msgs</build_depend>
+  <build_depend>moveit_msgs</build_depend>
+
+  <!-- Dependencies needed after this package is compiled. -->
+  <run_depend>roscpp</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>actionlib</run_depend>
+  <run_depend>tf</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>std_srvs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>diagnostic_msgs</run_depend>
+  <run_depend>trajectory_msgs</run_depend>
+  <run_depend>control_msgs</run_depend>
+  <run_depend>shape_msgs</run_depend>
+  <run_depend>moveit_msgs</run_depend>
+  <run_depend>manipulation_msgs</run_depend>
+
+</package>

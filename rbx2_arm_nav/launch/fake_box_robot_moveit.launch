@@ -1,0 +1,14 @@
+<launch>
+
+  <include file="$(find rbx2_bringup)/launch/fake_box_robot_with_arm.launch" />
+
+  <include file="$(find box_robot_moveit_config)/launch/move_group.launch">
+    <arg name="allow_trajectory_execution" value="true"/>
+  </include>
+
+  <!-- Since RViz has a tendency to crash, launch it separately -->
+  <!-- include file="$(find box_robot_moveit_config)/launch/moveit_rviz.launch"/ -->
+  
+  <!-- include file="$(find box_robot_moveit_config)/launch/default_warehouse_db.launch" / -->
+
+</launch>

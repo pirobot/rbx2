@@ -1,0 +1,7 @@
+<launch>
+
+  <node name="mjpeg_server" pkg="mjpeg_server" type="mjpeg_server" output="screen">
+     <param name="port" value="8080" />
+  </node>
+
+</launch>

@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+
+<robot name="kinect" xmlns:xacro="http://ros.org/wiki/xacro">
+
+   <!-- Define a number of dimensions using properties -->
+   <property name="kinect_body_x" value="0.07271" />
+   <property name="kinect_body_y" value="0.27794" />
+   <property name="kinect_body_z" value="0.033" />
+   
+   <property name="kinect_base_x" value="0.072" />
+   <property name="kinect_base_y" value="0.085" />
+   <property name="kinect_base_z" value="0.021" />
+   
+   <property name="kinect_base_post_height" value="0.016" />
+   <property name="kinect_base_post_radius" value="0.005" />
+
+   <property name="PI" value="3.1415" />
+         
+   <!-- Define a box-shaped camera link for the Kinect -->
+   <macro name="camera" params="parent name color *origin">
+      <joint name="${parent}_${name}_joint" type="fixed">
+         <xacro:insert_block name="origin" />
+         <parent link="${parent}_link"/>
+         <child link="${name}_base_link"/>
+      </joint>
+      
+      <link name="${name}_base_link">
+         <visual>
+            <origin xyz="0 0.0 0.0" rpy="0 0 0" />
+            <geometry>
+               <box size="${kinect_base_x} ${kinect_base_y} ${kinect_base_z}"/>
+            </geometry>
+            <material name="${color}" />
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <box size="${kinect_base_x} ${kinect_base_y} ${kinect_base_z}"/>
+            </geometry>
+         </collision>
+      </link>
+      
+      <joint name="${name}_base_post_joint" type="fixed">
+         <origin xyz="0 0 ${(kinect_base_z + kinect_base_post_height)/2}" rpy="0 0 0" />
+         <parent link="${name}_base_link" />
+         <child link="${name}_base_post_link" />
+      </joint>
+      
+      <link name="${name}_base_post_link">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <cylinder radius="${kinect_base_post_radius}" length="${kinect_base_post_height}"/>
+            </geometry>
+            <material name="${color}" />
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <cylinder radius="${kinect_base_post_radius}" length="${kinect_base_post_height}"/>
+            </geometry>
+         </collision>
+      </link>
+    
+      <joint name="${name}_base_joint" type="fixed">
+         <origin xyz="0 0 ${(kinect_base_post_height + kinect_body_z)/2}" rpy="0 0 0" />
+         <parent link="${name}_base_post_link" />
+         <child link="${name}_link" />
+      </joint>
+      
+      <link name="${name}_link">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <box size="${kinect_body_x} ${kinect_body_y} ${kinect_body_z}"/>
+            </geometry>
+            <material name="${color}" />
+         </visual>
+         <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+               <box size="${kinect_body_x} ${kinect_body_y} ${kinect_body_z}"/>
+            </geometry>
+         </collision>
+      </link>
+    
+      <joint name="${name}_depth_joint" type="fixed">
+         <origin xyz="0 0.0125 0" rpy="0 0 0" />
+          <parent link="${name}_link" />
+          <child link="${name}_depth_frame" />
+      </joint>
+
+      <link name="${name}_depth_frame">
+      <inertial>
+         <mass value="0.000001" />
+         <origin xyz="0 0 0" />
+         <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+            iyy="0.0001" iyz="0.0"
+            izz="0.0001" />
+         </inertial>
+      </link>
+
+      <joint name="${name}_depth_optical_joint" type="fixed">
+         <origin xyz="0 0 0" rpy="${-PI/2} 0 ${-PI/2}" />
+         <parent link="${name}_depth_frame" />
+         <child link="${name}_depth_optical_frame" />
+      </joint>
+
+      <link name="${name}_depth_optical_frame">
+         <inertial>
+            <mass value="0.000001" />
+            <origin xyz="0 0 0" />
+            <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+               iyy="0.0001" iyz="0.0"
+               izz="0.0001" />
+         </inertial>
+      </link>
+
+      <joint name="${name}_rgb_joint" type="fixed">
+         <origin xyz="0 -0.0125 0" rpy="0 0 0" />
+         <parent link="${name}_link" />
+         <child link="${name}_rgb_frame" />
+      </joint>
+
+      <link name="${name}_rgb_frame">
+         <inertial>
+         <mass value="0.000001" />
+         <origin xyz="0 0 0" />
+         <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+            iyy="0.0001" iyz="0.0"
+            izz="0.0001" />
+         </inertial>
+      </link>
+
+      <joint name="${name}_rgb_optical_joint" type="fixed">
+         <origin xyz="0 0 0" rpy="${-PI/2} 0 ${-PI/2}" />
+         <parent link="${name}_rgb_frame" />
+         <child link="${name}_rgb_optical_frame" />
+      </joint>
+
+      <link name="${name}_rgb_optical_frame">
+         <inertial>
+            <mass value="0.000001" />
+            <origin xyz="0 0 0" />
+            <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+               iyy="0.0001" iyz="0.0"
+               izz="0.0001" />
+         </inertial>
+      </link>
+  
+   </macro>
+
+</robot>

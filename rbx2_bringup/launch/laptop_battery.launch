@@ -1,0 +1,8 @@
+<launch>
+  <node pkg="rbx2_bringup" name="laptop_battery" type="laptop_battery.py" output="screen">
+     <rosparam>
+        rate: 1
+        battery_number: 1
+     </rosparam>
+  </node>
+</launch>

@@ -1,0 +1,9 @@
+pub_rate: 1.0
+analyzers:
+  joints:
+    type: GenericAnalyzer
+    path: 'Joints'
+    timeout: 5.0
+    contains: '_joint'
+    
+

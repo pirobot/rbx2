@@ -1,0 +1,38 @@
+<package>
+  <name>rbx2</name>
+  <version>0.1.0</version>
+
+  <description>ROS By Example Volume 2</description>
+
+  <maintainer email="patrick@pirobot.org">Patrick Goebel</maintainer>
+  <license>BSD</license>
+  <url type="website">http://ros.org/wiki/rbx2</url>
+  <url type="bugtracker">https://github.com/pirobot/rbx2/issues</url>
+  <author email="patrick@pirobot.org">Patrick Goebel</author>
+
+  <!-- Dependencies which this package needs to build itself. -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- Dependencies needed after this package is compiled. -->
+  <run_depend>rbx2_ar_tags</run_depend>
+  <run_depend>rbx2_dynamixels</run_depend>
+  <run_depend>rbx2_description</run_depend>
+  <run_depend>rbx2_tasks</run_depend>
+  <run_depend>rbx2_vision</run_depend>
+  <run_depend>rbx2_bringup</run_depend>
+  <run_depend>rbx2_arm_nav</run_depend>
+  <run_depend>rbx2_apps</run_depend>
+  <run_depend>rbx2_learning</run_depend>
+  <run_depend>rbx2_msgs</run_depend>
+  <run_depend>rbx2_utils</run_depend>
+  <run_depend>rbx2_gui</run_depend>
+  <run_depend>rbx2_nav</run_depend>
+  <run_depend>rbx2_gazebo</run_depend>
+  <run_depend>rbx2_diagnostics</run_depend>
+  <run_depend>rbx2_speech</run_depend>
+  
+  <export>
+    <metapackage/>
+  </export>
+
+</package>

@@ -1,0 +1,17 @@
+subscribers:
+  - name:        "Joystick control"
+    topic:       "/joystick_cmd_vel"
+    timeout:     0.2
+    priority:    2
+    
+  - name:        "Navigation stack"
+    topic:       "/move_base_cmd_vel"
+    timeout:     0.2
+    priority:    1
+    
+  - name:        "Keyboard control"
+    topic:       "/keyboard_cmd_vel"
+    timeout:     1.0
+    priority:    0
+    
+publisher:       "output/cmd_vel"

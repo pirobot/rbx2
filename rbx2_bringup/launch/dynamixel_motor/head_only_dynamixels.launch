@@ -1,0 +1,57 @@
+<launch>
+
+	<arg name="port" default="/dev/ttyUSB0" />
+
+    <param name="/use_sim_time" value="false" />
+
+    <!-- Load the URDF/Xacro model of our robot -->
+    <param name="robot_description" command="$(find xacro)/xacro.py '$(find rbx2_description)/urdf/pi_robot/pi_robot_with_pan_tilt_head.xacro'" />
+
+    <!-- Publish the robot state -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+    	<param name="publish_frequency" value="20.0"/>
+    </node>
+
+   <!-- Start the Dynamixel low-level driver manager with parameters -->
+   <node name="dynamixel_manager" pkg="dynamixel_controllers"
+      type="controller_manager.py" required="true" output="screen">
+      
+      <rosparam command="delete" param="/dynamixel" />
+      <rosparam command="delete" param="/dynamixel_manager" />
+      <rosparam command="delete" param="/joints" />
+      
+      <param name="serial_ports/dynamixels/port_name" value="$(arg port)" />
+
+      <rosparam>
+         namespace: head_only_dynamixel_manager
+         serial_ports:
+            dynamixels:
+               baud_rate: 1000000
+               min_motor_id:  1
+               max_motor_id: 2
+               update_rate: 20
+               diagnostics:
+                  error_level_temp: 55
+                  warn_level_temp: 45
+      </rosparam>
+   </node>
+   
+    <!-- Load the joint controller configuration from a YAML file -->
+    <rosparam file="$(find rbx2_dynamixels)/config/dynamixel_motor/head_only_dynamixel_params.yaml" command="load"/>
+
+   <!-- Start the head pan and tilt controllers -->
+   <node name="dynamixel_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
+        args="--manager=head_only_dynamixel_manager
+              --port=dynamixels
+              --type=simple
+        head_pan_joint
+        head_tilt_joint"
+        output="screen" />
+
+   <!-- Start the Dynamixel Joint States Publisher -->
+   <node name="dynamixel_joint_states_publisher" pkg="rbx2_dynamixels" type="dynamixel_joint_state_publisher.py" output="screen" />
+
+   <!-- Start all Dynamixels in the relaxed state -->
+   <node pkg="rbx2_dynamixels" type="relax_all_servos.py" name="relax_all_servos" />
+
+</launch>

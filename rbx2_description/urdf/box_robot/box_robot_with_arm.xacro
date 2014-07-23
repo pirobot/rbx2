@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+
+<robot name="box_robot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+   <!-- Define a number of dimensions using properties -->
+   <property name="PI" value="3.14159"/>
+
+   <property name="torso_offset_x" value="-0.13" />
+   <property name="torso_offset_y" value="0.0" />
+   <property name="torso_offset_z" value="0.41" />
+     
+   <property name="head_offset_x" value="0.0275" />
+   <property name="head_offset_y" value="0.0" />
+   <property name="head_offset_z" value="0.345" />
+   
+   <property name="arm_offset_x" value="0.0" />
+   <property name="arm_offset_y" value="-0.05" />
+   <property name="arm_offset_z" value="0.20" />
+
+   <!-- Include all component files -->
+   <xacro:include filename="$(find rbx2_description)/urdf/materials.urdf.xacro" />
+   <xacro:include filename="$(find rbx2_description)/urdf/box_robot/base.urdf.xacro" />
+   <xacro:include filename="$(find rbx2_description)/urdf/box_robot/torso.urdf.xacro" />
+   <xacro:include filename="$(find rbx2_description)/urdf/box_robot/box_pan_tilt_head.urdf.xacro" />
+   <xacro:include filename="$(find rbx2_description)/urdf/box_robot/box_arm.urdf.xacro" />
+   <xacro:include filename="$(find rbx2_description)/urdf/box_robot/box_gripper.urdf.xacro" />
+
+   <!-- Add the base and wheels -->
+   <base name="base" color="Black"/>
+   
+   <!-- Attach the torso -->
+   <torso name="torso" parent="base" color="Grey">
+      <origin xyz="${torso_offset_x} ${torso_offset_y} ${torso_offset_z}" rpy="0 0 0" />
+   </torso>
+   
+   <!-- Attach the pan and tilt head -->
+   <head name="head_base" parent="torso" color="White">
+      <origin xyz="${head_offset_x} ${head_offset_y} ${head_offset_z}" rpy="0 0 ${PI}" />
+   </head>
+   
+   <!-- Attach the right arm -->
+   <arm side="right" reflect="-1" parent="torso" color="White">
+     <origin xyz="${arm_offset_x} ${arm_offset_y} ${arm_offset_z}" rpy="0 0 ${PI/2}" />
+   </arm>
+    
+   <!-- Attach the right gripper -->
+   <gripper side="right" reflect="-1" parent="right_arm_gripper_attach" color="Green">
+     <origin xyz="0 0 0" rpy="0 0 0" /> 
+   </gripper>
+
+</robot>
+
+

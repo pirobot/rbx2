@@ -1,0 +1,36 @@
+<launch>
+   <param name="/use_sim_time" value="false" />
+        
+   <rosparam command="delete" param="/dynamixel" />
+   <rosparam command="delete" param="/joints" />
+
+   <!-- Load the URDF/Xacro model of our robot -->
+   <param name="robot_description" command="$(find xacro)/xacro.py '$(find rbx1_description)/urdf/turtlebot_with_head.xacro'" />
+    
+   <node name="arbotix" pkg="arbotix_python" type="arbotix_driver" output="screen">
+       <rosparam command="delete" param="/arbotix" />
+       <rosparam file="$(find rbx2_dynamixels)/config/arbotix_usb2dynamixel_head_only.yaml" command="load" />
+       <param name="sim" value="false"/>
+   </node>
+
+   <!-- Publish the robot state -->
+   <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+       <param name="publish_frequency" type="double" value="20.0" />
+   </node>
+   
+   <!-- Load diagnostics -->
+   <node pkg="diagnostic_aggregator" type="aggregator_node" name="diagnostic_aggregator" >
+      <rosparam command="load" file="$(find rbx2_bringup)/config/diagnostics.yaml" />
+   </node>
+
+   <node pkg="rqt_robot_monitor" type="rqt_robot_monitor" name="rqt_robot_monitor" />
+  
+   <!-- For fake localization we need static transform between /base_link and /world -->
+   <node pkg="tf" type="static_transform_publisher" name="base_world_broadcaster" args="0 0 0 0 0 0 /base_link /world 100" />
+   
+   <!-- We need a static transforms for the TurtleBot wheels -->
+   <node pkg="tf" type="static_transform_publisher" name="odom_left_wheel_broadcaster" args="0 0.13 0.015 0 0 0 /base_link /left_wheel_link 100" />
+   <node pkg="tf" type="static_transform_publisher" name="odom_right_wheel_broadcaster" args="0 -0.13 0.015 0 0 0 /base_link /right_wheel_link 100" />
+   <node pkg="tf" type="static_transform_publisher" name="odom_front_wheel_broadcaster" args="0.13 0 0 0 0 0 /base_link /front_wheel_link 100" />
+  
+</launch>

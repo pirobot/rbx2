@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+
+<robot name="kinect" xmlns:xacro="http://ros.org/wiki/xacro">
+
+   <!-- Define a number of dimensions using properties -->
+   <property name="kinect_size_x" value="0.07271" />
+   <property name="kinect_size_y" value="0.27794" />
+   <property name="kinect_size_z" value="0.070" />
+   
+   <property name="camera_mesh_scale" value="1.0" />
+   
+   <property name="PI" value="3.1415" />        
+   
+   <!-- Define a camera link for a Kinect -->
+   <macro name="camera" params="parent name color *origin">
+      <joint name="${parent}_${name}_joint" type="fixed">
+         <xacro:insert_block name="origin" />
+         <parent link="${parent}_link"/>
+         <child link="${name}_link"/>
+      </joint>
+      <link name="${name}_link">
+         <visual>
+            <origin xyz="0 0 0" rpy="0 0 ${PI/2}" />
+            <geometry>
+               <mesh filename="package://rbx2_description/meshes/kinect.dae" scale="${camera_mesh_scale} ${camera_mesh_scale} ${camera_mesh_scale}" />
+            </geometry>
+            <material name="${color}" />
+         </visual>
+         <collision>
+           <origin xyz="0 0 0" rpy="0 0 0" />
+           <geometry>
+              <box size="${kinect_size_x} ${kinect_size_y} ${kinect_size_z}"/>
+           </geometry>
+         </collision>
+      </link>
+    
+      <joint name="camera_depth_joint" type="fixed">
+         <origin xyz="0 0.0125 0.015" rpy="0 0 0" />
+          <parent link="camera_link" />
+          <child link="camera_depth_frame" />
+      </joint>
+
+      <link name="camera_depth_frame">
+      <inertial>
+         <mass value="0.000001" />
+         <origin xyz="0 0 0" />
+         <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+            iyy="0.0001" iyz="0.0"
+            izz="0.0001" />
+         </inertial>
+      </link>
+
+      <joint name="camera_depth_optical_joint" type="fixed">
+         <origin xyz="0 0 0" rpy="${-PI/2} 0 ${-PI/2}" />
+         <parent link="camera_depth_frame" />
+         <child link="camera_depth_optical_frame" />
+      </joint>
+
+      <link name="camera_depth_optical_frame">
+         <inertial>
+            <mass value="0.000001" />
+            <origin xyz="0 0 0" />
+            <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+               iyy="0.0001" iyz="0.0"
+               izz="0.0001" />
+         </inertial>
+      </link>
+
+      <joint name="camera_rgb_joint" type="fixed">
+         <origin xyz="0 -0.0125 0.015" rpy="0 0 0" />
+         <parent link="camera_link" />
+         <child link="camera_rgb_frame" />
+      </joint>
+
+      <link name="camera_rgb_frame">
+         <inertial>
+         <mass value="0.000001" />
+         <origin xyz="0 0 0" />
+         <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+            iyy="0.0001" iyz="0.0"
+            izz="0.0001" />
+         </inertial>
+      </link>
+
+      <joint name="camera_rgb_optical_joint" type="fixed">
+         <origin xyz="0 0 0" rpy="${-PI/2} 0 ${-PI/2}" />
+         <parent link="camera_rgb_frame" />
+         <child link="camera_rgb_optical_frame" />
+      </joint>
+
+      <link name="camera_rgb_optical_frame">
+         <inertial>
+            <mass value="0.000001" />
+            <origin xyz="0 0 0" />
+            <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+               iyy="0.0001" iyz="0.0"
+               izz="0.0001" />
+         </inertial>
+      </link>
+
+      <!-- Uncomment to place white "eyes" on the Kinect
+      <link name="left_eye_link">
+         <visual>	
+            <origin xyz="0 0 0" rpy="0 ${PI/2} 0" />
+	        <geometry>
+	           <cylinder length="0.01" radius="0.01" />
+	        </geometry>
+	        <material name="OffWhite" />
+	     </visual>
+      </link>
+  
+      <link name="right_eye_link">
+         <visual>	
+            <origin xyz="0 0 0" rpy="0 ${PI/2} 0" />
+	        <geometry>
+	           <cylinder length="0.01" radius="0.01" />
+	        </geometry>
+	        <material name="OffWhite" />
+	     </visual>
+      </link>
+  
+      <joint name="left_eye_joint" type="fixed">
+         <parent link="camera_link" />
+         <child link="left_eye_link" />
+         <origin xyz="0.0275 0.035 0.015" rpy="0 0 0" />
+      </joint>
+	
+      <joint name="right_eye_joint" type="fixed">
+         <parent link="camera_link" />
+         <child link="right_eye_link" />
+         <origin xyz="0.0275 -0.035 0.015" rpy="0 0 0" />
+      </joint>
+      -->
+  
+   </macro>
+
+</robot>

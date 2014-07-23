@@ -1,0 +1,8 @@
+<launch>
+
+  <node pkg="ubr1_grasping" name="basic_grasping_perception" type="basic_grasping_perception" output="screen" >
+    <param name="use_debug" value="true" />
+    <remap from="/head_camera/depth_registered/points" to="/camera/depth_registered/points" />
+  </node>
+
+</launch>

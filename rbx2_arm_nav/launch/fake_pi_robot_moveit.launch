@@ -1,0 +1,11 @@
+<launch>
+
+  <include file="$(find rbx2_bringup)/launch/fake_pi_robot_with_arm.launch" />
+
+  <include file="$(find pi_robot_moveit_config)/launch/move_group.launch">
+    <arg name="allow_trajectory_execution" value="true"/>
+  </include>
+  
+  <include file="$(find pi_robot_moveit_config)/launch/default_warehouse_db.launch" />
+
+</launch>

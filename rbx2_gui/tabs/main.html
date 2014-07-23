@@ -1,0 +1,278 @@
+<!-- Main Tab -->
+
+<script type="text/javascript">
+// Initialize the Server host and port to the defaults.
+document.getElementById("rosbridgeHost").value = rosbridgeHost;
+document.getElementById("rosbridgePort").value = rosbridgePort;
+
+// The connect button
+$("#connectButton").jqxToggleButton({theme: 'ui-start', width: '120', toggled: true});
+
+$("#connectButton").on("click", function () {
+    var toggled = $("#connectButton").jqxToggleButton('toggled');
+    if (toggled) {
+	$("#connectButton")[0].value = "Disconnect";
+	connectServer();
+    }
+    else {
+	$("#connectButton")[0].value = "Connect";
+	disconnectServer();
+    }
+});
+
+// Robot battery gauge
+$('#robotBatteryGauge').jqxLinearGauge({
+    theme: 'ui-start',
+    orientation: 'horizontal',
+    width: 250,
+    height: 50,
+    labels: { interval: 10, position: 'far' },
+    ticksMajor: { size: '10%', interval: 10, position: 'far' },
+    ticksMinor: { visible: false },
+    max: 100,
+    min: 0,
+    pointer: { size: '20%', style: { fill: '#00FF00' } }
+});
+
+// Laptop battery gauge
+$('#laptopBatteryGauge').jqxLinearGauge({
+    theme: 'ui-start',
+    orientation: 'horizontal',
+    width: 250,
+    height: 50,
+    labels: { interval: 10, position: 'far' },
+    ticksMajor: { size: '10%', interval: 10, position: 'far' },
+    ticksMinor: { visible: false },
+    max: 100,
+    min: 0,
+    pointer: { size: '20%', style: { fill: '#00FF00' } }
+});
+
+// Begin KineticJS scripts and parameters
+var basePadWidth = 300;
+var basePadHeight = 300;
+
+var baseLayer = new Kinetic.Layer();
+var baseMarkerLayer = new Kinetic.Layer();
+var baseMessageLayer = new Kinetic.Layer();
+
+// A line for indicating current velocity overlayed on the video
+var cmdVelMarker = new Kinetic.Line({});
+
+var baseStage = new Kinetic.Stage({
+    container: "baseContainer",
+    //x: 0,
+    //y: 0,
+    draggable: false,
+    width: basePadWidth,
+    height: basePadHeight
+});
+
+// The base control trackpad
+var basePad = new Kinetic.Rect({
+    //x: 0,
+    //y: 0,
+    width: basePadWidth,
+    height: basePadHeight,
+    //offset: [0, 0],
+    fill: "#00D2FF",
+    stroke: "black",
+    strokeWidth: 1
+});
+
+// A vertical line down the middle of the base pad
+var basePadVerticalLine = new Kinetic.Line({
+    points: [basePadWidth/2, 0, basePadWidth/2, basePadHeight],
+    stroke: "black",
+    strokeWidth: 1,
+    listening: false
+});
+
+// A horizontal line across the middle of the base pad
+var basePadHorizontalLine = new Kinetic.Line({
+    points: [0, basePadHeight/2, basePadWidth, basePadHeight/2],
+    stroke: "black",
+    strokeWidth: 1,
+    listening: false
+});
+
+// A circular base pad marker to grab onto with the mouse
+var basePadMarker = new Kinetic.Circle({
+    x: basePadWidth/2,
+    y: basePadHeight/2,
+    radius: 40	,
+    listening: false,
+    fill: "yellow",
+    stroke: "black",
+    strokeWidth: 1
+});
+
+// Motion control feedback arrow to overlay on the video
+var cmdVelMarker = new Kinetic.Line({
+    points: [videoStageWidth/2, videoStageHeight],
+    listening: false,
+    strokeWidth: 20,
+    opacity: 0.4,
+    lineCap: "round",
+    stroke: "#00CC00"
+});
+
+// Define event actions for the base trackpad
+basePad.on("mousedown", function() {
+    mouseDown = true;
+    baseStage.draw();
+});
+
+basePad.on("mousemove touchmove", function() {
+    if (! isTouchDevice && ! mouseDown) { return; }
+    var mousePos = baseStage.getPointerPosition();
+    var x = (mousePos.x - basePad.getX()) - basePadWidth / 2;
+    var y = basePadHeight / 2 - (mousePos.y - basePad.getY());
+    x /= (basePadWidth / 2);
+    y /= (basePadHeight / 2);
+    //vx = sign(y) * (Math.pow(2, Math.abs(y)) - 1) * options['maxLinearSpeed'];
+    //vz = -sign(x) * (Math.pow(2, Math.abs(x)) - 1) * options['maxAngularSpeed'];
+    vx = y * options['maxLinearSpeed'];
+    vz = -x * options['maxAngularSpeed'];
+    updateBasePadMarker(vx, vz);
+//    cmdVelMarkerY = mousePos.y * 4;
+//    cmdVelMarker.setPoints([videoStageWidth/2, videoStageHeight, mousePos.x + (videoStageWidth - basePadWidth)/2, cmdVelMarkerY]);
+//    if (Math.abs(vz) < options['deadZoneVz']) vz = 0;
+    writeMessageById("baseMessages", " vx: " + Math.round(y * 100)/100 + ", vz: " + Math.round(x*100)/100, "green");
+    pubCmdVel();
+});
+
+basePad.on("touchend mouseup dblclick", function() {
+    mouseDown = false;
+    stopRobot();
+    basePadMarker.setX(basePadWidth/2);
+    basePadMarker.setY(basePadHeight/2);
+    cmdVelMarker.setPoints([videoStageWidth/2, videoStageHeight]);
+    baseMarkerLayer.drawScene();
+    writeMessageById("baseMessages", "Stopping robot");
+});
+
+baseLayer.add(basePad);
+baseLayer.add(basePadVerticalLine);
+baseLayer.add(basePadHorizontalLine);
+baseMarkerLayer.add(basePadMarker)
+
+baseStage.add(baseLayer);
+baseStage.add(baseMarkerLayer);
+baseStage.add(baseMessageLayer);
+
+function updateBasePadMarker(vx, vz) {
+    markerX = vz / options['maxAngularSpeed'];
+    markerY = vx / options['maxLinearSpeed'];
+        
+    markerX *= basePadWidth / 2;
+    markerX = basePad.getX() + basePadWidth / 2 - markerX;
+    markerY *= basePadHeight / 2;
+    markerY = basePad.getY() + basePadHeight / 2 - markerY;
+    
+    basePadMarker.setX(markerX);
+    basePadMarker.setY(markerY);
+    baseMarkerLayer.draw();
+    writeMessageById("baseMessages", " vx: " + Math.round(vx * 100)/100 + ", vz: " + Math.round(vz*100)/100);
+}
+
+function writeMessageById(id, message, color) {
+    color = typeof color !== 'undefined' ? color: "#006600";
+    element = document.getElementById(id);
+    element.innerHTML = message;
+    element.style.font = "18pt Calibri";
+    element.style.color = color;
+}
+
+</script>
+
+<!-- Wrap the whole layout in a table -->
+<table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-top:10px;">
+  <tr>
+    <td style="vertical-align:top;">
+      <!-- *** Left-Top Panel: Connect/Disconnect to the rosbridge Server -->
+      <table border="0" cellpadding="0" cellspacing="0">
+	<tr>
+	  <td style="vertical-align:top;">
+	    <div style="text-align:center;margin-left:10px;margin-top:0px;">
+	      Server Hostname or IP: <input type="text" id="rosbridgeHost" value="">&nbsp;
+	      Port: <input type="text" id="rosbridgePort" value="" size="5">&nbsp;
+	      <input id="connectButton" type="button" width="50" value="Disconnect"></div>
+	  </td>
+	</tr>
+
+	<!-- *** Left-Bottom Panel: Video Display -->
+	<tr>
+	  <td style="vertical-align:top;">
+	    <!-- Display the mjpeg video canvas -->
+	    <div id="videoMessages" style="height:35px; margin-left:40px;"></div>
+	    <div id="videoCanvas" style="text-align:center; margin-left:15px; position:relative; display:block;"></div>
+	  </td>
+	</tr>
+	</table>
+      </td>
+      
+      <!-- Right Panel: Base control and speed settings -->
+      <td style="vertical-align:top;text-align:center;">
+
+	<fieldset><legend>Base Control</legend>
+          <div id="baseMessages" style="height:35px;"></div>
+          <div id="baseContainer"></div>
+	</fieldset>
+
+	<fieldset><!-- <legend>Base Max Speed</legend> -->
+          <table border="0" cellpadding="0" cellspacing="0" style="width:100%; vertical-align:top; text-align:center;">
+            <tr>
+	      <td align="right">Max Linear Spd: </td>
+	      <td><input id="maxLinearSpeed" min="0.01" max="0.5" step="0.01" value="0.12" onChange="maxLinearSpeedDisplay.value=this.value;setMaxLinearSpeed(this.value);" onInput="maxLinearSpeedDisplay.value=this.value;setMaxLinearSpeed(this.value);" type="range">&nbsp;<output id="maxLinearSpeedDisplay">0.18</output></td>
+            </tr>
+            <tr>
+	      <td align="right">Max Rotation Spd: </td>
+	      <td><input id="maxAngularSpeed" min="0.1" max="3.0" step="0.1" value="0.4" onChange="maxAngularSpeedDisplay.value=this.value;setMaxAngularSpeed(this.value);" onInput="maxAngularSpeedDisplay.value=this.value;setMaxAngularSpeed(this.value);" type="range">&nbsp;<output id="maxAngularSpeedDisplay">1.2</output></td>
+            </tr>
+          </table>
+	</fieldset>
+
+        <!-- Battery and servo status -->
+	<fieldset><!-- <legend>Robot Status</legend> -->
+	  <table border="0" cellpadding="0" cellspacing="0" style="width:100%; vertical-align:top; text-align:center;">
+	      <tr>
+		<td style="text-align:right;vertical-align:top;">
+		  <span id="robotBatteryGauge"></span>
+		  <span id="robotReharging">&nbsp;</span>
+		</td>
+		<td style="font-size:14pt;text-align:left;">Robot Battery</td>
+              </tr>
+	      <tr>
+		<td style="text-align:right;vertical-align:top;">
+        	  <span id="laptopBatteryGauge"></span>
+		  <span id="laptopCharging">&nbsp;</span>
+		</td>
+		<td style="font-size:14pt;text-align:left;">Laptop Battery</td>
+              </tr>
+          </table>
+	</fieldset>
+
+<!--
+	<fieldset><legend>Head Pan/Tilt</legend>
+	  <table style="border:0pt none ; text-align:left; margin-left:auto; margin-right:auto;">
+            <tbody>
+              <tr>
+	      <tr>
+		<td valign="top" style="text-align:center;"><span style="font-weight:bold;">Pan: <output id="panSliderSisplay">0.0</output></span></td>
+		<td colspan="3" valign="top"><input id="panSlider" min="-3.0" max="3.0" step="0.05" value="0.0" onChange="panSliderDisplay.value=this.value;setPan(this.value);" type="range"><p></td>
+              </tr>
+	      <tr>
+		<td style="text-align:center;"><input class="centerServos" value="Center" onclick="centerHeadServos();" type="button"></td>
+		<td><input class="relaxServos" value="Relax" onclick="relaxAllServos();" type="button"></td>
+		<td><input class="driveView" value="Drive View" onclick="drivePanTilt();" type="button"></td>
+              </tr>
+          </tbody></table>
+	</fieldset>
+-->
+      </td>
+    </tr>
+
+</table>
+
+

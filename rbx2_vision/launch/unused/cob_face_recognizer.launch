@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<launch>
+  <!-- face recognition node (recognizes faces in color image and publishes their positions) -->
+  <rosparam command="load" ns="/cob_people_detection/face_recognizer" file="$(find rbx2_vision)/config/cob_face_recognizer_params.yaml"/>
+  <node name="face_recognizer" pkg="cob_people_detection" ns="/cob_people_detection/face_recognizer" type="face_recognizer_node" output="screen"> <!--launch-prefix= "gdb -ex run args"-->
+    <remap from="face_positions" to="/cob_people_detection/face_detector/face_positions"/>
+    <!--remap from="face_positions" to="/cob_people_detection/face_normalizer/norm_faces"/-->
+  </node>
+
+</launch>

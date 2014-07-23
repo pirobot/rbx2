@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="colorimage_in_topic" default="/camera/rgb/image_color"/>
+  <arg name="pointcloud_rgb_in_topic" default="/camera/rgb/points"/>
+
+  <!-- sensor message gateway node (forwards sensor messages in a desired rate) -->
+  <rosparam command="load" ns="/cob_people_detection/sensor_message_gateway" file="$(find cob_people_detection)/ros/launch/sensor_message_gateway_params.yaml"/>
+  <node name="sensor_message_gateway" pkg="cob_people_detection" ns="/cob_people_detection/sensor_message_gateway" type="sensor_message_gateway_node" output="screen"> <!--launch-prefix="valgrind"-->
+    <remap from="pointcloud_rgb_in" to="$(arg pointcloud_rgb_in_topic)"/>
+    <remap from="pointcloud_rgb_out" to="/cob_people_detection/sensor_message_gateway/pointcloud_rgb_out"/>
+    <remap from="colorimage_in" to="$(arg colorimage_in_topic)"/>
+    <remap from="colorimage_out" to="/cob_people_detection/sensor_message_gateway/colorimage_out"/>
+  </node>
+
+</launch>

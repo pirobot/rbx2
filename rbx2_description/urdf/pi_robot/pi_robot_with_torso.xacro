@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<robot name="pi_robot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+   <!-- Define a number of dimensions using properties -->
+   <property name="torso_offset_x" value="-0.13" />
+   <property name="torso_offset_y" value="0.0" />
+   <property name="torso_offset_z" value="0.088" />
+
+   <!-- Include all component files -->
+   <xacro:include filename="$(find rbx2_description)/urdf/materials.urdf.xacro" />
+   <xacro:include filename="$(find rbx2_description)/urdf/pi_robot/pi_base.urdf.xacro" />
+   <xacro:include filename="$(find rbx2_description)/urdf/pi_robot/pi_torso.urdf.xacro" />
+   
+   <!-- Add the base and wheels -->
+   <base name="base" color="Black"/>
+   
+   <!-- Attach the torso -->
+   <torso name="torso" parent="base" color="Grey">
+      <origin xyz="${torso_offset_x} ${torso_offset_y} ${torso_offset_z}" rpy="0 0 0" />
+   </torso>
+
+</robot>
+
+

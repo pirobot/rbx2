@@ -1,0 +1,17 @@
+<launch>
+
+  <rosparam ns="/robot_gui">
+     maxLinearSpeed: 0.2
+     maxAngularSpeed: 1.5
+     videoTopic: /camera/rgb/image_color
+  </rosparam>
+
+  <node name="mini_httpd" pkg="rbx2_gui" type="mini-httpd.sh" output="screen" />
+
+  <node name="mjpeg_server" pkg="mjpeg_server" type="mjpeg_server" output="screen" />
+  
+  <node name="node_launcher" pkg="rbx2_utils" type="node_launcher.py" output="screen" />
+
+  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" />
+
+</launch>

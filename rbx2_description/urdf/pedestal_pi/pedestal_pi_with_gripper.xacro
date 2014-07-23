@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+
+<robot name="pedestal_pi_with_gripper" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <property name="BASE_MESH_SCALE" value="1.0"/>
+  <property name="BASE_MESH_COLLISION_SCALE" value="0.0252"/>
+
+  <property name="MESH_SCALE" value="0.001"/>
+  <property name="MESH_COLLISION_SCALE" value="0.00105"/>
+  <property name="BASE_THICKNESS" value="0.004" />
+  <property name="LOWER_BASE_HEIGHT" value="0.26" />
+  <property name="LOWER_BASE_RADIUS" value="0.075" />
+
+  <material name="Green">
+    <color rgba="0.0 0.8 0.0 1.0"/>
+  </material>
+  
+  <material name="OffWhite">
+    <color rgba="0.8 0.8 0.8 0.9"/>
+  </material>
+
+  <material name="White">
+    <color rgba="1.0 1.0 1.0 1.0"/>
+  </material>
+
+  <material name="DarkGray">
+     <color rgba="0.3 0.3 0.3 1.0"/>
+  </material>
+  
+  <material name="LightGray">
+     <color rgba="0.6 0.6 0.6 1.0"/>
+  </material>
+  
+  <material name="Red">
+     <color rgba="1.0 0.0 0.0 0.5"/>
+  </material>
+  
+  <xacro:include filename="$(find rbx2_description)/urdf/pedestal_pi/pedestal_pi_pan_tilt_head.urdf.xacro" />
+  <xacro:include filename="$(find rbx2_description)/urdf/pi_robot/pi_arm.urdf.xacro" />
+  <xacro:include filename="$(find rbx2_description)/urdf/pi_robot/pi_gripper.urdf.xacro" />
+
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 1.57" />
+      <geometry>
+          <mesh filename="package://rbx2_description/meshes/pedestal_pi/pedestal_pi.dae" scale="${BASE_MESH_SCALE} ${BASE_MESH_SCALE} ${BASE_MESH_SCALE}"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 1.57" />
+       <geometry>
+          <mesh filename="package://rbx2_description/meshes/pedestal_pi/pedestal_pi_collision.dae" scale="${BASE_MESH_COLLISION_SCALE} ${BASE_MESH_COLLISION_SCALE} ${BASE_MESH_COLLISION_SCALE}"/>
+       </geometry>
+     </collision>
+   </link>
+   
+   <link name="base_footprint">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.05 0.05 0.001" />
+        </geometry>
+        <material name="TransparentGreen" />
+      </visual>
+   </link>
+  
+   <joint name="base_joint" type="fixed">
+     <origin xyz="0 0 ${BASE_THICKNESS}" rpy="0 0 0" />        
+     <parent link="base_footprint"/>
+     <child link="base_link" />
+   </joint>
+    
+   <!-- Attach the head -->
+   <head name="head_base" parent="base" color="White">
+     <origin xyz="-${AX12_DEPTH/4} 0 0.438" rpy="${PI/2} 0 ${PI/2}" />
+   </head>
+    
+   <!-- Attach the right arm -->
+   <arm side="right" reflect="-1" parent="base" color="White">
+     <origin xyz="0.0 -0.068 ${AX12_HEIGHT + 0.3375}" rpy="0 0 1.57" />
+   </arm>
+   
+   <!-- Attach the right gripper -->
+   <gripper side="right" reflect="-1" parent="right_arm_gripper_attach" color="Green">
+     <origin xyz="0 0 0" rpy="0 0 0" /> 
+   </gripper>
+   
+</robot>

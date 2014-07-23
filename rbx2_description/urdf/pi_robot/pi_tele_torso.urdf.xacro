@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+
+<robot name="torso" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Define a number of dimensions using properties -->
+  <property name="lower_torso_size_x" value="0.0254" />
+  <property name="lower_torso_size_y" value="0.0254" />
+  <property name="lower_torso_size_z" value="0.5" />
+  
+  <property name="upper_torso_size_x" value="0.0254" />
+  <property name="upper_torso_size_y" value="0.0254" />
+  <property name="upper_torso_size_z" value="0.5" />
+     
+  <!-- Define the torso -->
+  <macro name="torso" params="parent name color *origin">
+    <joint name="${parent}_${name}_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}_link"/>
+      <child link="lower_${name}_link"/>
+    </joint>
+    
+    <link name="lower_${name}_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="${lower_torso_size_x} ${lower_torso_size_y} ${lower_torso_size_z}" />
+        </geometry>
+        <material name="${color}" />
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="${lower_torso_size_x} ${lower_torso_size_y} ${lower_torso_size_z}" />
+        </geometry>
+      </collision>
+    </link>
+    
+    <link name="upper_${name}_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="${upper_torso_size_x} ${upper_torso_size_y} ${upper_torso_size_z}" />
+        </geometry>
+        <material name="${color}" />
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="${upper_torso_size_x} ${upper_torso_size_y} ${upper_torso_size_z}" />
+        </geometry>
+      </collision>
+    </link>
+    
+    <joint name="${name}_joint" type="prismatic">
+      <parent link="lower_${name}_link"/>
+      <child link="upper_${name}_link"/>
+      <axis xyz="0 0 1" />
+      <origin xyz="0 0 0.3" rpy="0 0 0"/>
+      <limit lower="-0.15" upper="0.15" velocity="0.1" effort="1.0" />
+    </joint>
+    
+  </macro>
+
+</robot>

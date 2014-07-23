@@ -1,0 +1,8 @@
+\subsubsection usage Usage
+\verbatim
+<node name="battery_simulator" pkg="rbx2_utils" type="battery_simulator">
+  <param name="battery_runtime" type="int" value="30" />
+  <param name="set_battery_level" type="int" value="100" />
+</node>
+\endverbatim
+

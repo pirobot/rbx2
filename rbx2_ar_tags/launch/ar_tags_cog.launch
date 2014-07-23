@@ -1,0 +1,8 @@
+<launch>
+   <node pkg="rbx2_ar_tags" name="ar_tags_cog" type="ar_tags_cog.py" output="screen">
+      <rosparam command="delete" param="/ar_tags_cog" />
+      <rosparam>
+         tag_ids: [0, 1, 2]
+      </rosparam>
+   </node>
+</launch>

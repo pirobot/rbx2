@@ -1,0 +1,5 @@
+<launch>
+   <node pkg="rbx2_diagnostics" type="monitor_dynamixels.py" name="monitor_dynamixels" output="screen">
+      <param name="minimum_rest_interval" value="60" />
+   </node>
+</launch>

@@ -1,0 +1,34 @@
+<launch>
+  <!-- Make sure we are not using simulated time -->
+  <param name="/use_sim_time" value="false" />
+  
+  <!-- Set an argument to point to the URDF/Xacro model of our robot -->
+  <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find rbx2_description)/urdf/box_robot/box_robot_with_arm.xacro'" />
+
+  <!-- Load the URDF model onto the ROS parameter server -->
+  <param name="robot_description" command="$(arg urdf_file)" />
+   
+  <!-- Bring up the arbotix driver with a configuration file appropriate to the robot -->
+  <node name="arbotix" pkg="arbotix_python" type="arbotix_driver" clear_params="true" output="screen">
+      <rosparam file="$(find rbx2_dynamixels)/config/arbotix/box_robot_with_gripper.yaml" command="load" />
+      <param name="sim" value="true"/>
+  </node>
+  
+  <!-- Run a separate driver for the one sided gripper -->
+  <node name="right_gripper_controller" pkg="arbotix_controllers" type="gripper_controller" output="screen">
+      <rosparam>
+         model: singlesided
+         invert: true
+         center: 0.0
+         pad_width: 0.01
+         finger_length: 0.1653
+         joint: right_gripper_finger_joint
+      </rosparam>
+  </node>
+
+  <!-- Fire up the robot state publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+      <param name="publish_frequency" type="double" value="20.0" />
+  </node>
+  
+</launch>

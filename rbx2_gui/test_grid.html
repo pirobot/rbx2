@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+
+    <script type="text/javascript" src="js/easeljs.min.js"></script>
+    <script type="text/javascript" src="js/eventemitter2.min.js"></script>
+    <script type="text/javascript" src="js/mjpegcanvas.min.js"></script>
+    <script type="text/javascript" src="js/nav2d.min.js"></script>
+    <script type="text/javascript" src="js/ros2d.min.js"></script>
+    <script type="text/javascript" src="js/roslib.min.js"></script>
+
+<script type="text/javascript" type="text/javascript">
+  /**
+   * Setup all visualization elements when the page is loaded. 
+   */
+  function init() {
+    // Connect to ROS.
+    var ros = new ROSLIB.Ros({
+      url : 'ws://localhost:9090'
+    });
+
+    // Create the main viewer.
+    var viewer = new ROS2D.Viewer({
+      divID : 'nav',
+      width : 350,
+      height : 400
+    });
+
+    // Setup the nav client.
+    var nav = ROS2D.OccupancyGridClientNav({
+      ros : ros,
+      rootObject : viewer.scene,
+      viewer : viewer,
+      serverName : '/move_base'
+    });
+  }
+</script>
+</head>
+
+<body onload="init()">
+  <h1>Simple Map Example</h1>
+  <p>Run the following commands in the terminal then refresh this page.</p>
+  <ol>
+    <li><tt>roslaunch pr2_gazebo pr2_empty_world.launch</tt>
+    </li>
+    <li>Place the Willow Garage model over the robot by selecting <tt>Willow Garage</tt> from
+      the models list in the <tt>Insert</tt> tab.</li>
+    <li><tt>rosrun map_server map_server
+        /opt/ros/groovy/stacks/wg_common/willow_maps/willow-sans-whitelab-2010-02-18-0.025.pgm 0.025</tt>
+    </li>
+    <li><tt>export ROBOT=sim</tt></li>
+    <li><tt>roslaunch pr2_2dnav pr2_2dnav.launch</tt></li>
+    <li><tt>roslaunch pr2_tuckarm tuck_arms.launch</tt></li>
+    <li><tt>rosrun robot_pose_publisher robot_pose_publisher</tt></li>
+    <li><tt>roslaunch rosbridge_server rosbridge_websocket.launch</tt>
+    </li>
+  </ol>
+  <div id="nav"></div>
+</body>
+</html>

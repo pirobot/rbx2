@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+
+<robot name="base" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Define a number of dimensions using properties -->
+  <property name="wheel_length" value="0.02032" />
+  <property name="wheel_radius" value="0.06191" />
+  <property name="wheel_offset_x" value="0.07" />
+  <property name="wheel_offset_y" value="0.13" />
+  <property name="wheel_offset_z" value="-0.0035" />
+  
+  <property name="base_radius" value="0.152" />
+  <property name="base_height" value="0.241" />
+  
+  <property name="base_mesh_scale" value="0.0254" />
+  
+  <property name="PI" value="3.1415" />
+     
+  <!-- define a wheel -->
+  <macro name="wheel" params="suffix parent reflect color">
+    <joint name="${parent}_${suffix}_wheel_joint" type="continuous">
+      <axis xyz="0 0 1" />
+      <limit effort="100" velocity="100"/>
+      <safety_controller k_velocity="10" />
+      <origin xyz="${wheel_offset_x} ${reflect*wheel_offset_y} ${wheel_offset_z}" rpy="${reflect*1.57} 0 0" />
+      <parent link="${parent}_link"/>
+      <child link="${parent}_${suffix}_wheel_link"/>
+    </joint>
+    <link name="${parent}_${suffix}_wheel_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+        </geometry>
+        <material name="${color}" />
+      </visual>
+    </link>
+  </macro>
+
+  <!-- The base xacro macro -->
+  <macro name="base" params="name color">
+    <link name="${name}_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 ${PI/2}" />
+        <geometry>
+           <mesh filename="package://rbx2_description/meshes/pi_robot/pi_robot_base.stl" scale="${base_mesh_scale} ${base_mesh_scale} ${base_mesh_scale}" />
+        </geometry>
+        <material name="${color}" />
+      </visual>
+      <collision>
+        <origin xyz="0 0 ${base_height/2}" rpy="0 0 0" />
+        <geometry>
+           <cylinder radius="${base_radius}" length="${base_height}"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+  
+  <link name="base_footprint">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.05 0.05 0.001" />
+        </geometry>
+        <material name="TransparentGreen" />
+      </visual>
+  </link>
+  
+  <joint name="base_joint" type="fixed">
+    <origin xyz="0 0 ${wheel_radius - wheel_offset_z}" rpy="0 0 0" />        
+    <parent link="base_footprint"/>
+    <child link="base_link" />
+  </joint>
+
+   <!-- Add the drive wheels -->
+   <wheel parent="base" suffix="l" reflect="1" color="Orange"/>
+   <wheel parent="base" suffix="r" reflect="-1" color="Orange"/>
+
+</robot>

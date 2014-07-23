@@ -1,0 +1,24 @@
+port: /dev/ttyUSB0
+baud: 1000000
+rate: 100
+sync_write: True
+sync_read: False
+read_rate: 10
+write_rate: 10
+
+joints: {
+    head_pan_joint: {id: 1, neutral: 512, min_angle: -145, max_angle: 145},
+    head_tilt_joint: {id: 2, neutral: 512, min_angle: -90, max_angle: 90},
+    right_arm_shoulder_roll_joint: {id: 3, neutral: 512, invert: True},
+    right_arm_elbow_flex_joint: {id: 4, neutral: 512, min_angle: -90, max_angle: 90},
+    right_arm_forearm_flex_joint: {id: 5, neutral: 512, min_angle: -90, max_angle: 90},
+    right_arm_wrist_flex_joint: {id: 6, neutral: 512, min_angle: -90, max_angle: 90},
+    right_arm_shoulder_pan_joint: {id: 7, ticks: 4096, neutral: 2048, min_angle: -100, max_angle: 100},
+    right_arm_shoulder_lift_joint: {id: 8, ticks: 4096, neutral: 2048, invert: True}
+}
+
+controllers: {
+   base_controller: {type: diff_controller, base_frame_id: base_footprint, base_width: 0.26, ticks_meter: 4100, Kp: 12, Kd: 12, Ki: 0, Ko: 50, accel_limit: 1.0 },
+   right_arm_controller: {onboard: False, action_name: right_arm_controller/follow_joint_trajectory, type: follow_controller, joints: [right_arm_shoulder_pan_joint, right_arm_shoulder_lift_joint, right_arm_shoulder_roll_joint, right_arm_elbow_flex_joint, right_arm_forearm_flex_joint, right_arm_wrist_flex_joint]},
+   head_controller: {onboard: False, action_name: head_controller/follow_joint_trajectory, type: follow_controller, joints: [head_pan_joint, head_tilt_joint]}
+}

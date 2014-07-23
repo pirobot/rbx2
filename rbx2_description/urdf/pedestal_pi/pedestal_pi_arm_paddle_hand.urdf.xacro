@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+
+<robot name="arm_paddle_hand" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find rbx2_description)/urdf/pi_robot/dynamixel_arm_hardware.xacro" />
+
+  <macro name="arm" params="side reflect parent color *origin"> 
+    <link name="${side}_arm_base_link" />     
+    <joint name="${side}_arm_base_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}_link"/>
+      <child link="${side}_arm_base_link" />
+    </joint>
+
+    <!-- shoulder pan  -->
+    <bioloid_F2_fixed parent="${side}_arm_base" name="${side}_arm_shoulder_F2_0" color="${color}">
+      <origin xyz="0 0 0" rpy="${PI/2} 0 ${PI/2}" />
+    </bioloid_F2_fixed>
+    
+    <dynamixel_AX12_revolute parent="${side}_arm_shoulder_F2_0" name="${side}_arm_shoulder_pan" vlimit="1.571" llimit="-1.57" ulimit="1.57">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+    </dynamixel_AX12_revolute>
+    
+    <!-- shoulder lift -->
+    <bioloid_F3_fixed parent="${side}_arm_shoulder_pan" name="${side}_arm_shoulder_F3_0" color="${color}">
+      <origin xyz="0 0 ${-AX12_HEIGHT - 0.002}" rpy="0 ${PI} 0" />
+    </bioloid_F3_fixed>
+    
+    <dynamixel_AX12_revolute parent="${side}_arm_shoulder_F3_0" name="${side}_arm_shoulder_lift" vlimit="1.571" llimit="-3.14" ulimit="3.14">
+      <origin xyz="0 0.002 ${(AX12_WIDTH)/2}" rpy="${PI/2} ${PI} ${PI}" />
+      <axis xyz="0 1 0"/>
+    </dynamixel_AX12_revolute>
+    
+    <!-- shoulder roll -->
+    <bioloid_F3_fixed parent="${side}_arm_shoulder_lift" name="${side}_arm_shoulder_F3_1" color="${color}">
+      <origin xyz="0 0 ${-AX12_HEIGHT - 0.002}" rpy="${PI} 0 0" />
+    </bioloid_F3_fixed>
+    
+    <dynamixel_AX12_revolute parent="${side}_arm_shoulder_F3_1" name="${side}_arm_shoulder_roll" vlimit="1.571" llimit="-3.14" ulimit="3.14">
+      <origin xyz="0 0 ${AX12_HEIGHT/2}" rpy="${-PI/2} 0 ${-PI/2}" />
+      <axis xyz="0 1 0"/>
+    </dynamixel_AX12_revolute>
+    
+    <bioloid_F3_fixed parent="${side}_arm_shoulder_roll" name="${side}_arm_shoulder_roll_F3_0" color="${color}">
+      <origin xyz="${AX12_WIDTH/2} 0 ${-(AX12_DEPTH - F3_WIDTH)/2}" rpy="0 ${PI/2} 0" />
+    </bioloid_F3_fixed>
+
+    <bioloid_F9_fixed parent="${side}_arm_shoulder_roll_F3_0" name="${side}_arm_shoulder_roll_F9_0" color="${color}">
+      <origin xyz="0 ${-F9_DEPTH/2 - 0.000} ${-F9_DEPTH/2 + 0.004}" rpy="0 ${PI/2} 0" />
+    </bioloid_F9_fixed>
+    
+    <!-- elbow flex -->
+    <bioloid_F3_fixed parent="${side}_arm_shoulder_roll_F9_0" name="${side}_arm_elbow_F3_0" color="${color}">
+      <origin xyz="0 ${-AX12_HEIGHT/2 + 0.0035} 0" rpy="${PI/2} ${PI} ${PI}" />
+    </bioloid_F3_fixed>
+    
+    <dynamixel_AX12_fixed parent="${side}_arm_elbow_F3_0" name="${side}_arm_elbow_flex_servo">
+      <origin xyz="0 0 ${-(AX12_WIDTH + F3_HEIGHT/2)}" rpy="0 ${PI} 0" />
+    </dynamixel_AX12_fixed>
+    
+    <bioloid_F2_revolute parent="${side}_arm_elbow_flex_servo" name="${side}_arm_elbow_flex" color="${color}" vlimit="1.571" llimit="-1.75" ulimit="1.75">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <axis xyz="0 1 0" />
+    </bioloid_F2_revolute>
+    
+    <!-- forearm flex -->
+    <bioloid_F3_fixed parent="${side}_arm_elbow_flex" name="${side}_arm_forearm_F3_0" color="${color}">
+      <origin xyz="0 0 ${AX12_HEIGHT/2 + F3_HEIGHT - 0.0015}" rpy="${PI} 0 ${PI/2}" />
+    </bioloid_F3_fixed>
+    
+    <dynamixel_AX12_fixed parent="${side}_arm_forearm_F3_0" name="${side}_arm_forearm_flex_servo">
+      <origin xyz="0 0 ${-(AX12_HEIGHT/2 + F2_DEPTH)}" rpy="${PI} 0 0" />
+    </dynamixel_AX12_fixed>
+    
+    <bioloid_F2_revolute parent="${side}_arm_forearm_flex_servo" name="${side}_arm_forearm_flex" color="${color}" vlimit="1.571" llimit="-1.75" ulimit="1.75">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <axis xyz="0 1 0" />
+    </bioloid_F2_revolute>
+    
+    <bioloid_F2_fixed parent="${side}_arm_forearm_flex" name="${side}_arm_forearm_F2_0" color="${color}">
+      <origin xyz="0 0 ${AX12_HEIGHT/2 + F2_HEIGHT - 0.004}" rpy="0 ${PI} ${PI/2}" />
+    </bioloid_F2_fixed>
+    
+    <!-- wrist flex -->
+    <dynamixel_AX12_revolute parent="${side}_arm_forearm_F2_0" name="${side}_arm_wrist_flex" vlimit="1.571" llimit="-1.75" ulimit="1.75">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <axis xyz="0 1 0"/>
+    </dynamixel_AX12_revolute>
+    
+    <bioloid_F3_fixed parent="${side}_arm_wrist_flex" name="${side}_hand_attach" color="${color}">
+      <origin xyz="0 0 ${-AX12_HEIGHT - F3_HEIGHT/2}" rpy="${PI} 0 0" />
+    </bioloid_F3_fixed>
+    
+    <!-- paddle hand -->
+    <joint name="${side}_hand_joint" type="fixed">
+       <origin xyz="0 0 0.0021" rpy="${PI/2} 0 0"/>
+       <parent link="${side}_hand_attach_link"/>
+       <child link="${side}_hand_link"/>
+     </joint>
+     
+    <link name="${side}_hand_link">
+       <inertial>
+         <mass value="0.00001"/>
+         <origin xyz="0 0 0"/>
+         <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+       </inertial>
+       
+       <visual>
+         <origin xyz="0 0 0" rpy="0 0 0" />
+         <geometry>
+            <mesh filename="package://rbx2_description/meshes/F11.stl" scale="${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE} ${DYNAMIXEL_MESH_SCALE}"/>
+         </geometry>
+         <material name="Grey">
+           <color rgba="0.6 0.6 0.6 1.0"/>
+         </material>
+       </visual>
+       
+       <collision>
+          <origin xyz="0 0.028 0" rpy="0 0 0"/>
+          <geometry>
+             <box size="0.030 0.056 0.032"/>
+          </geometry>
+       </collision>
+     </link>
+     
+    <!-- Planning link and joint for the right hand -->
+    <joint name="${side}_hand_planning_joint" type="fixed">
+      <axis xyz="0 0 1" />
+      <origin xyz="0 0.02 0" rpy="${PI} 0 ${PI/2}"/>
+      <parent link="${side}_hand_link"/>
+      <child link="${side}_hand_planning_link"/>
+    </joint>
+    
+    <link name="${side}_hand_planning_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+           <box size="0.001 0.0005 0.0005"/>
+        </geometry>
+      </visual>
+    </link>
+
+  </macro>
+
+</robot>

@@ -1,0 +1,28 @@
+<launch>
+  <arg name="sim" default="False" />
+  <arg name="controller_type" default="arbotix" />
+  <arg name="tracker_type" default="speed" />
+
+  <node pkg="rbx2_dynamixels" name="head_tracker" type="head_tracker.py" output="screen">
+    <remap from="target_topic" to="/target_pose" />
+    
+    <param name="sim" value="$(arg sim)" />
+    <param name="controller_type" value="$(arg controller_type)" />
+    <param name="tracker_type" value="$(arg tracker_type)" />
+    
+     <rosparam>
+       rate: 20
+       gain_pan: 2.5
+       gain_tilt: 2.5
+       pan_threshold: 0.0
+       tilt_threshold: 0.0
+       max_joint_speed: 1.5
+       min_joint_speed: 0.001
+       lead_target_angle: 0.5
+       max_lead_target_angle: 0.5
+       speed_update_threshold: 0.1
+       recenter_timeout: 2
+    </rosparam>
+    
+  </node>
+</launch>

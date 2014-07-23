@@ -1,0 +1,8 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: rbx2_description
+    relative_path: urdf/pedestal_pi/pedestal_pi_with_gripper.urdf
+  SRDF:
+    relative_path: config/pedestal_pi_with_gripper.srdf
+  CONFIG:
+    generated_timestamp: 1392081918

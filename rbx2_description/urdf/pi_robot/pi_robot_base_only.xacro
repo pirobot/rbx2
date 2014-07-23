@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<robot name="pi_robot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+   <!-- Include all component files -->
+   <xacro:include filename="$(find rbx2_description)/urdf/materials.urdf.xacro" />
+   <xacro:include filename="$(find rbx2_description)/urdf/pi_robot/pi_base.urdf.xacro" />
+   
+   <!-- Add the base and wheels -->
+   <base name="base" color="Black"/>
+
+</robot>
+
+

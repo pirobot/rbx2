@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<robot name="pi_robot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+   <!-- Define a number of dimensions using properties -->
+   <property name="laser_offset_x" value="0.122" />
+   <property name="laser_offset_y" value="0.0" />
+   <property name="laser_offset_z" value="0.026" />
+
+   <!-- Include all component files -->
+   <xacro:include filename="$(find rbx2_description)/urdf/materials.urdf.xacro" />
+   <xacro:include filename="$(find rbx2_description)/urdf/pi_robot/pi_base.urdf.xacro" />
+   <xacro:include filename="$(find rbx2_description)/urdf/sensors/laser.urdf.xacro" />
+   
+   <!-- Add the base and wheels -->
+   <base name="base" color="Black"/>
+   
+   <!-- Attach the laser -->
+   <laser parent="base" color="DarkGrey">
+      <origin xyz="${laser_offset_x} ${laser_offset_y} ${laser_offset_z}" rpy="0 0 0 " />
+   </laser>
+
+</robot>
+
+

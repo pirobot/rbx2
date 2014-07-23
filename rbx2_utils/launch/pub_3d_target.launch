@@ -1,0 +1,12 @@
+<launch>
+   <arg name="speed" default="1.5" />
+   <arg name="rate" default="20" />
+   <arg name="move_target_rate" default="20" />
+
+   <node pkg="rbx2_utils" name="pub_3d_target" type="pub_3d_target.py" output="screen" >
+     <rosparam command="delete" param="/pub_3d_target" />
+     <param name="rate" value="$(arg rate)" />
+     <param name="move_target_rate" value="$(arg move_target_rate)" />
+     <param name="speed" value="$(arg speed)" />
+   </node>
+</launch>

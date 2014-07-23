@@ -1,0 +1,18 @@
+<launch>
+    <!-- Load the URDF/Xacro model of our robot -->
+    <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find rbx2_description)/urdf/pi_robot/pi_robot_with_two_arms.xacro'" />
+
+    <param name="robot_description" command="$(arg urdf_file)" />
+    
+    <!-- Publish the robot state -->
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+    	<param name="publish_frequency" value="20.0"/>
+    </node>
+
+	<!-- Provide simulated control of the robot joint angles -->
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    	<param name="use_gui" value="True" />
+    	<param name="rate" value="20.0"/>
+    </node>
+
+</launch>

@@ -1,0 +1,8 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: rbx2_description
+    relative_path: urdf/pi_robot/pi_robot.urdf
+  SRDF:
+    relative_path: config/pi_robot.srdf
+  CONFIG:
+    generated_timestamp: 1402274474

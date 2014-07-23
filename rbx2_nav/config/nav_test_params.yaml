@@ -1,0 +1,5 @@
+controller_frequency: 2.0
+
+TrajectoryPlannerROS:
+  yaw_goal_tolerance: 6.28 # We don't care about orientation
+  xy_goal_tolerance: 0.10

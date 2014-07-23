@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML5//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+    <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=0.65, user-scalable=yes">
+
+    <title>Rosbridge Advanced GUI</title>
+
+    <!-- Style sheets -->
+    <link rel="stylesheet" href="js/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <link rel="stylesheet" href="js/jqwidgets/styles/jqx.ui-start.css" type="text/css">
+    <link rel="stylesheet" href="styles/robot_gui.css" type="text/css">
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+
+    <!-- KinectJS -->
+    <!-- script type="text/javascript" src="js/kinetic-v4.3.3.min.js"></script -->
+    <script type="text/javascript" src="js/kinetic-v5.1.0.min.js"></script>
+
+    <!-- jqWidgets -->
+    <script type="text/javascript" src="js/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxchart.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxdragdrop.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxdropdownlist.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxexpander.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxgauge.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxradiobutton.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxslider.js"></script>
+    <script type="text/javascript" src="js/jqwidgets/jqxtabs.js"></script>
+
+    <!-- ROS stuff -->
+    <script type="text/javascript" src="js/easeljs.min.js"></script>
+    <script type="text/javascript" src="js/eventemitter2.min.js"></script>
+    <script type="text/javascript" src="js/mjpegcanvas.min.js"></script>
+    <script type="text/javascript" src="js/nav2d.js"></script>
+    <script type="text/javascript" src="js/ros2d.min.js"></script>
+    <script type="text/javascript" src="js/roslib.min.js"></script>
+
+    <!-- Load the HTML files for each tab -->
+    <script type="text/javascript">
+    
+       $(document).ready(function () {
+           // Load the tab files
+
+           var main = $('#main');
+           main.load("tabs/main.html", function (response, status, xhr) {
+               var pageString = response;
+               main.html(pageString);
+           });
+
+           var navigation = $('#navigation');
+           navigation.load("tabs/navigation.html", function (response, status, xhr) {
+               var pageString = response;
+               navigation.html(pageString);
+           });
+
+           var diagnostics = $('#diagnostics');
+           diagnostics.load("tabs/diagnostics.html", function (response, status, xhr) {
+               var pageString = response;
+               diagnostics.html(pageString);
+           });
+
+           var parameters = $('#parameters');
+           parameters.load("tabs/parameters.html", function (response, status, xhr) {
+               var pageString = response;
+               parameters.html(pageString);
+           });
+
+           var misc = $('#misc');
+           misc.load("tabs/misc.html", function (response, status, xhr) {
+               var pageString = response;
+               misc.html(pageString);
+           });
+
+           // Define the tabs
+           $('#jqxtabs').jqxTabs({
+               width: '100%',
+               keyboardNavigation: false,
+	       theme: 'ui-start'
+           });
+
+           $('#jqxtabs').bind('selected', function (event) {
+               var item = event.args.item;
+               var title = $('#jqxtabs').jqxTabs('getTitleAt', item);
+           });
+       });
+   </script>
+
+    <!-- The init() functions waits until the pages have loaded -->
+   <script type="text/javascript">
+   function init() {
+      function waitForDOM() {
+	  var video = document.getElementById('videoCanvas');
+	  var basePad = document.getElementById('baseContainer');
+          if (video == null || basePad == null) {
+	      setTimeout(waitForDOM, 100);
+          }
+      }
+       waitForDOM();
+   }
+   </script> 
+
+ </head>
+
+<!-- Run the init() script followed by init_ros() -->
+<body onload="init();init_ros();">
+
+   <!-- Set up the tab layout -->
+   <div id="jqxtabs">
+      <ul style="margin-left:20px; font-size:22px;">
+         <li>Main Panel</li>
+         <li>Navigation</li>
+         <li>Diagnostics</li>
+         <li>Parameters</li>
+         <li>Misc</li>
+      </ul>
+
+      <div id="main"></div>
+      <div id="navigation"></div>
+      <div id="diagnostics"></div>
+      <div id="parameters"></div>
+      <div id="misc"></div>
+   </div>
+
+    <!-- Our own Javascript -->
+    <script type="text/javascript" src="js/robot_gui.js"></script>
+</body>
+</html>

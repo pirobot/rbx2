@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+
+<launch>
+  <!-- parameters -->
+  <arg name="camera_namespace" default="camera"/>    <!-- top level namespace of the openni camera driver, default for openni driver is camera, for Care-O-bot default is cam3d -->
+  <arg name="colorimage_in_topic" default="/$(arg camera_namespace)/rgb/image_color"/>    <!-- very different between openni driver versions, might also be /$(arg camera_namespace)/rgb/image -->
+  <arg name="pointcloud_rgb_in_topic" default="/$(arg camera_namespace)/depth_registered/points"/>    <!-- very different between openni driver versions, might also be /$(arg camera_namespace)/rgb/points or /$(arg camera_namespace)/depth/points_xyzrgb or /$(arg camera_namespace)/depth_registered/points -->
+
+  <arg name="using_nodelets" default="false"/>    <!-- for using people detection with the faster nodelet mode, provide argument true -->
+  <arg name="nodelet_manager" default="$(arg camera_namespace)_nodelet_manager"/>    <!-- name of the nodelet manager started by the openni driver, default for the openni driver is camera_nodelet_manager, 
+for Care-O-bot default is cam3d_nodelet_manager -->
+  <arg name="start_manager" default="false"/>     <!-- if you do not like to use the nodelet manager provided by the openni driver, specify your own by setting this parameter to true and providing the name of your manager with argument nodelet_manager-->
+  <arg name="display_results_with_image_view" default="true"/>		<!-- set to false if you do not like to display the camera image with names attached to detected faces within an image_view window --> 
+
+
+  <!-- nodelet or non-nodelet specific launch files -->
+  <group unless="$(arg using_nodelets)">
+    <!-- launch files for usage without nodelets -->
+    <include file="$(find cob_people_detection)/ros/launch/sensor_message_gateway.launch">
+      <arg name="colorimage_in_topic" value="$(arg colorimage_in_topic)"/>
+      <arg name="pointcloud_rgb_in_topic" value="$(arg pointcloud_rgb_in_topic)"/>
+    </include>
+    <include file="$(find cob_people_detection)/ros/launch/image_flip.launch"/>
+  </group>
+  <group if="$(arg using_nodelets)">
+    <!-- special launch files for usage with nodelets -->
+    <node if="$(arg start_manager)" pkg="nodelet" type="nodelet" name="$(arg nodelet_manager)"  args="manager" output="screen"/>
+    <include file="$(find cob_people_detection)/ros/launch/sensor_message_gateway_nodelet.launch">
+      <arg name="nodelet_manager" value="$(arg nodelet_manager)"/>
+      <arg name="colorimage_in_topic" value="$(arg colorimage_in_topic)"/>
+      <arg name="pointcloud_rgb_in_topic" value="$(arg pointcloud_rgb_in_topic)"/>
+    </include>
+    <include file="$(find cob_people_detection)/ros/launch/image_flip_nodelet.launch">
+    	<arg name="nodelet_manager" value="$(arg nodelet_manager)"/>
+    </include>
+  </group>
+
+  <!-- remaining launch files -->
+  <param name="/cob_people_detection/data_storage_directory" type="string" value="$(env HOME)/.ros/cob_people_detection/files/"/>
+  <!--param name="/cob_people_detection/data_directoryTEST" type="string" value="$(find cob_people_detection)/common/files/"/-->
+
+  <include file="$(find cob_people_detection)/ros/launch/head_detector.launch"/>
+  <include file="$(find cob_people_detection)/ros/launch/face_detector.launch"/>
+  <!--include file="$(find cob_people_detection)/ros/launch/face_normalizer.launch"/-->
+  <include file="$(find rbx2_vision)/launch/cob_face_recognizer.launch"/>
+  <include file="$(find cob_people_detection)/ros/launch/detection_tracker.launch"/>
+  <include file="$(find cob_people_detection)/ros/launch/people_detection_display.launch">
+    <arg name="display_results_with_image_view" value="$(arg display_results_with_image_view)"/>
+  </include>
+  <include file="$(find cob_people_detection)/ros/launch/face_capture.launch"/>
+  <include file="$(find cob_people_detection)/ros/launch/coordinator.launch">
+    <arg name="using_nodelets" value="$(arg using_nodelets)"/>
+  </include>
+
+  <!-- Openni people segmentation and tracker (not tested for compatibility for a long time!) - adapted to publish the segmented image (does not work upside down, i.e. when robot is watching backwards) (comment out if you do not use the openni-tracker) -->
+  <!-- <node pkg="cob_people_detection" ns="cob_people_detection/openni_tracker" type="openni_tracker" name="openniTrackerNode" output="screen"/> -->
+</launch>

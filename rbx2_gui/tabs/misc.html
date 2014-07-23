@@ -1,0 +1,105 @@
+<!-- Misc Tab -->
+
+<script type="text/javascript">
+
+// The pubChatter button click
+$("#pubChatterButton").jqxToggleButton({theme: 'ui-start', width: '75', toggled: false});
+
+$("#pubChatterButton").on("click", function () {
+    var toggled = $("#pubChatterButton").jqxToggleButton('toggled');
+    if (toggled) {
+	$("#pubChatterButton")[0].value = "Stop";
+	chatter = true;
+    }
+    else {
+	$("#pubChatterButton")[0].value = "Publish";
+	chatter = false;
+    }
+});
+
+// The subscribeChatter button
+$("#subChatterButton").jqxToggleButton({theme: 'ui-start', width: '75', toggled: false});
+
+$("#subChatterButton").on("click", function () {
+    var toggled = $("#subChatterButton").jqxToggleButton('toggled');
+    if (toggled) {
+	$("#subChatterButton")[0].value = "Stop";
+    }
+    else {
+	$("#subChatterButton")[0].value = "Subscribe";
+    }
+    subChatter();
+});
+
+// The topic list pull down menu
+//topicList = getTopics();
+//var topics = new $.jqx.dataAdapter
+
+</script>
+
+<table style="text-align:left;width:100%;" border="0" cellpadding="2" cellspacing="2">
+    <tbody>
+    <tr>
+    <td>&nbsp;</td>
+    </tr>
+    </tbody>
+</table>
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td style="vertical-align:middle;text-align:right;">Publish: </td>
+      <td style="vertical-align:middle;text-align:center;"><div><input id="pubChatterButton" type="button" value="Publish"></div></td>
+    <td>Topic: &#47;chatter</td>
+      <td style="vertical-align:middle;">Message:&nbsp; <input id="chatterMessage" value="Greetings Humans!"></td>
+    </tr>
+    <tr>
+      <td style="vertical-align:middle;text-align: right;">Subscribe: </td>
+      <td style="vertical-align:middle;text-align: center;"><div><input id="subChatterButton" type="button" value="Subscribe"></div></td>
+      <td style="vertical-align:middle;">Topic: &#47;chatter</td>
+      <td style="vertical-align:middle;">Message:&nbsp; <label id="chatterData" style="color:green;"></td>
+    </tr>
+    <tr>
+      <td style="vertical-align:middle;text-align: right;">List Topics: </td>
+      <td style="vertical-align:middle;text-align: center;"><div><input id="TopicsButton" type="button" value="Get/Refresh List" onClick="loadTopics();"></div></td>
+      <td style="vertical-align:middle;"><div id="topicListPullDown" style="float:left;margin-left:10px;display:inline;"></div></td>
+    <td style="vertical-align:middle;">&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="vertical-align:middle;text-align: right;">Get Parameter:<br>
+      </td>
+      <td style="vertical-align:middle;text-align: center;"><div><input id="getParamsButton" type="button" value="Get/Refresh List" onClick="loadParamNames();"></div></td>
+      <td style="vertical-align:middle;"><div id="getParamListPullDown" style="float:left;margin-left:10px;display:inline;"></div></td>
+      <td style="vertical-align:middle;">Value:&nbsp; <label id="getParamResult" style="display:inline-block;width=150px;"></label></td>
+    </tr>
+    <tr>
+      <td style="vertical-align:middle;text-align: right;">Set Parameter:</td>
+      <td style="vertical-align:middle;text-align: center;"><div><input id="setParamsButton" type="button" value="Get/Refresh List" onClick="loadParamNames();"></div></td>
+      <td style="vertical-align:middle;"><div id="setParamListPullDown" style="float:left;margin-left:10px;display:inline;"></div></td>
+      <td style="vertical-align:middle;">Value:&nbsp; <input id="setParamValue"></td>
+    </tr>
+
+  </tbody>
+</table>
+
+<style>
+#cmd_vel_wrapper {
+    width: 500px;
+    white-space: nowrap;
+}
+.cmd_vel_handle {
+    width:20px;
+    height:20px;
+    background: blue;
+    position: relative;
+    float: left;
+    margin-right:20px;
+    overflow: hidden;
+}
+.cmd_vel_trackpad {
+    width:200px;
+    height:200px;
+    background: palegreen;
+}
+</style>

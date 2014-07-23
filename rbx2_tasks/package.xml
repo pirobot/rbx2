@@ -1,0 +1,48 @@
+<package>
+  <name>rbx2_tasks</name>
+  <version>0.1.0</version>
+
+  <description>ROS By Example Vol 2 - Tasks</description>
+
+  <maintainer email="patrick@pirobot.org">Patrick Goebel</maintainer>
+  <license>BSD</license>
+  <url type="website">http://ros.org/wiki/rbx2_tasks</url>
+  <url type="bugtracker">https://github.com/pirobot/rbx2/issues</url>
+  <author email="patrick@pirobot.org">Patrick Goebel</author>
+
+  <!-- Dependencies which this package needs to build itself. -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- Dependencies needed to compile this package. -->
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>smach</build_depend>
+  <build_depend>smach_ros</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>nav_msgs</build_depend>
+  <build_depend>diagnostic_msgs</build_depend>
+  <build_depend>move_base_msgs</build_depend>
+  <build_depend>actionlib</build_depend>
+  <build_depend>visualization_msgs</build_depend>
+  <build_depend>rbx2_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>pi_trees_lib</build_depend>
+  <build_depend>pi_trees_ros</build_depend>
+
+  <!-- Dependencies needed after this package is compiled. -->
+  <run_depend>roscpp</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>smach</run_depend>
+  <run_depend>smach_ros</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>nav_msgs</run_depend>
+  <run_depend>diagnostic_msgs</run_depend>
+  <run_depend>move_base_msgs</run_depend>
+  <run_depend>actionlib</run_depend>
+  <run_depend>visualization_msgs</run_depend>
+  <run_depend>rbx2_msgs</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>pi_trees_lib</run_depend>
+  <run_depend>pi_trees_ros</run_depend>
+
+</package>

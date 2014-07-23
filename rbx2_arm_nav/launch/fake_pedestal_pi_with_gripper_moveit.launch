@@ -1,0 +1,11 @@
+<launch>
+
+  <include file="$(find rbx2_bringup)/launch/fake_pedestal_pi_with_gripper.launch" />
+
+  <include file="$(find pedestal_pi_with_gripper_moveit_config)/launch/move_group.launch">
+    <arg name="allow_trajectory_execution" value="true"/>
+  </include>
+  
+  <include file="$(find pedestal_pi_with_gripper_moveit_config)/launch/default_warehouse_db.launch" />
+
+</launch>

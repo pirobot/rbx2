@@ -1,0 +1,12 @@
+<launch>
+  <node pkg="rbx2_dynamixels" name="head_tracker" type="arbotix_head_position_tracker.py" output="screen">
+    <remap from="camera_info" to="/camera/rgb/camera_info" />
+    
+     <rosparam>
+       gain_pan: 0.2
+       gain_tilt: 0.2
+       max_joint_speed: 0.5
+    </rosparam>
+    
+  </node>
+</launch>

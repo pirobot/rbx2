@@ -1,0 +1,11 @@
+port: /dev/ttyUSB0
+baud: 1000000
+rate: 20
+sync_write: True
+sync_read: False
+read_rate: 20
+write_rate: 20
+
+controllers: {
+   base_controller: {type: diff_controller, base_frame_id: base_footprint, base_width: 0.26, ticks_meter: 4100, Kp: 12, Kd: 12, Ki: 0, Ko: 50, accel_limit: 1.0 }
+}
