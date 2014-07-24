@@ -282,6 +282,7 @@ class MoveItDemo:
         # Append the goal point to the trajectory points
         t.points.append(tp)
         
+        # Return the joint trajectory
         return t
     
     # Generate a gripper translation in the direction given by vector
