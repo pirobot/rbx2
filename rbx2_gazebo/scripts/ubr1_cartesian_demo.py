@@ -49,14 +49,13 @@ class MoveItDemo:
                 
         # Allow some leeway in position(meters) and orientation (radians)
         arm.set_goal_position_tolerance(0.01)
-        arm.set_goal_orientation_tolerance(0.1)
+        arm.set_goal_orientation_tolerance(0.05)
         
         # Get the name of the end-effector link
         end_effector_link = arm.get_end_effector_link()
                                         
         # Set an initial position for the arm
-        #start_position = [-0.0117456734842, 0.793972905488, -0.0074579719079, -1.67822729461, -3.13336061467, -0.884103134089, 3.1415174069]
-        start_position = [-0.0, 0.5, -0.0074579719079, -1.67822729461, -3.13336061467, -0.884103134089, 3.1415174069]
+        start_position = [0.0, 0.5, -0.0074579719079, -1.67822729461, -3.1415174069, -1.1, 3.1415174069]
 
         # Set the goal pose of the end effector to the stored pose
         arm.set_joint_value_target(start_position)
