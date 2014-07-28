@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-    ubr1_rajectory_demo.py - Version 0.1 2014-01-14
+    ubr1_trajectory_demo.py - Version 0.1 2014-01-14
     
     Send a trajectory to the FollowJointTrajectoryAction server for the UBR-1 robot
     
