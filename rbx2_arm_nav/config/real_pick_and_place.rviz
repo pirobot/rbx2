@@ -9,6 +9,7 @@ Panels:
         - /MotionPlanning1/Scene Geometry1
         - /MotionPlanning1/Scene Robot1
         - /MotionPlanning1/Planned Path1
+        - /Gripper Pose1
       Splitter Ratio: 0.74256
     Tree Height: 580
   - Class: rviz/Help
@@ -49,7 +50,9 @@ Visualization Manager:
       Value: true
     - Class: moveit_rviz_plugin/MotionPlanning
       Enabled: true
+      Move Group Namespace: ""
       MoveIt_Goal_Tolerance: 0
+      MoveIt_Planning_Attempts: 10
       MoveIt_Planning_Time: 5
       MoveIt_Use_Constraint_Aware_IK: true
       MoveIt_Warehouse_Host: 127.0.0.1
@@ -67,7 +70,17 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          base_l_wheel_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          base_r_wheel_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -238,6 +251,11 @@ Visualization Manager:
             Show Trail: false
             Value: true
           right_gripper_static_finger_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          torso_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -271,9 +289,9 @@ Visualization Manager:
       Planning Scene Topic: /move_group/monitored_planning_scene
       Robot Description: robot_description
       Scene Geometry:
-        Scene Alpha: 1
+        Scene Alpha: 0
         Scene Color: 50; 230; 50
-        Scene Display Time: 0.1
+        Scene Display Time: 1
         Show Scene Geometry: true
         Voxel Coloring: Z-Axis
         Voxel Rendering: Occupied Voxels
@@ -290,7 +308,17 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          base_l_wheel_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          base_r_wheel_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -465,6 +493,11 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          torso_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
         Robot Alpha: 0
         Show Robot Collision: false
         Show Robot Visual: true
@@ -474,7 +507,7 @@ Visualization Manager:
       Axes Radius: 0.01
       Class: rviz/Pose
       Color: 255; 25; 0
-      Enabled: false
+      Enabled: true
       Head Length: 0.3
       Head Radius: 0.1
       Name: Gripper Pose
@@ -482,7 +515,7 @@ Visualization Manager:
       Shaft Radius: 0.05
       Shape: Axes
       Topic: /gripper_pose
-      Value: false
+      Value: true
     - Alpha: 1
       Class: rviz/RobotModel
       Collision Enabled: false
@@ -498,7 +531,17 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        base_l_wheel_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        base_r_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -673,6 +716,11 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        torso_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
       Name: RobotModel
       Robot Description: robot_description
       TF Prefix: ""
@@ -694,22 +742,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 1.52235
+      Distance: 1.30519
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.390604
-        Y: -0.175503
-        Z: 0.162141
+        X: 0.126602
+        Y: -0.17935
+        Z: 0.61002
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.119798
+      Pitch: 0.299797
       Target Frame: base_footprint
       Value: Orbit (rviz)
-      Yaw: 1.65673
+      Yaw: 4.93673
     Saved: ~
 Window Geometry:
   Displays:
@@ -725,5 +773,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1067
-  X: 295
-  Y: 84
+  X: 847
+  Y: 30
