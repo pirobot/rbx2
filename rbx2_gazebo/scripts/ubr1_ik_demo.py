@@ -64,7 +64,7 @@ class MoveItDemo:
         target_pose.header.stamp = rospy.Time.now()     
         target_pose.pose.position.x = 0.50
         target_pose.pose.position.y = 0.0
-        target_pose.pose.position.z = 1.2   
+        target_pose.pose.position.z = 1.4 
         target_pose.pose.orientation.x = 0.0
         target_pose.pose.orientation.y = 0.0
         target_pose.pose.orientation.z = 0.0
