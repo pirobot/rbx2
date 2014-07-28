@@ -1,0 +1,8 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: rbx2_description
+    relative_path: urdf/pi_robot/grasping_pi_robot.urdf
+  SRDF:
+    relative_path: config/grasping_pi_robot.srdf
+  CONFIG:
+    generated_timestamp: 1406432402

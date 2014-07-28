@@ -1,0 +1,36 @@
+joint_limits:
+  right_arm_elbow_flex_joint:
+    has_velocity_limits: true
+    max_velocity: 0.707
+    has_acceleration_limits: true
+    max_acceleration: 0.7
+  right_arm_forearm_flex_joint:
+    has_velocity_limits: true
+    max_velocity: 0.707
+    has_acceleration_limits: true
+    max_acceleration: 0.7
+  right_arm_shoulder_lift_joint:
+    has_velocity_limits: true
+    max_velocity: 0.707
+    has_acceleration_limits: true
+    max_acceleration: 0.7
+  right_arm_shoulder_pan_joint:
+    has_velocity_limits: true
+    max_velocity: 0.707
+    has_acceleration_limits: true
+    max_acceleration: 0.7
+  right_arm_shoulder_roll_joint:
+    has_velocity_limits: true
+    max_velocity: 0.707
+    has_acceleration_limits: true
+    max_acceleration: 0.7
+  right_arm_wrist_flex_joint:
+    has_velocity_limits: true
+    max_velocity: 0.707
+    has_acceleration_limits: true
+    max_acceleration: 0.7
+  right_gripper_finger_joint:
+    has_velocity_limits: true
+    max_velocity: 6.28
+    has_acceleration_limits: false
+    max_acceleration: 0
