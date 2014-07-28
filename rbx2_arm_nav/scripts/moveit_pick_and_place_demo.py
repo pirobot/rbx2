@@ -27,7 +27,8 @@ import moveit_commander
 from geometry_msgs.msg import PoseStamped, Pose
 from moveit_commander import MoveGroupCommander, PlanningSceneInterface
 from moveit_msgs.msg import PlanningScene, ObjectColor
-from moveit_msgs.msg import Grasp, GripperTranslation
+from moveit_msgs.msg import Grasp, GripperTranslation, MoveItErrorCodes
+
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from tf.transformations import quaternion_from_euler
 from copy import deepcopy
@@ -211,35 +212,35 @@ class MoveItDemo:
             rospy.sleep(0.2)
     
         # Track success/failure and number of attempts for pick operation
-        success = False
+        result = None
         n_attempts = 0
         
         # Repeat until we succeed or run out of attempts
-        while success == False and n_attempts < max_pick_attempts:
-            success = right_arm.pick(target_id, grasps)
+        while result != MoveItErrorCodes.SUCCESS and n_attempts < max_pick_attempts:
+            result = right_arm.pick(target_id, grasps)
             n_attempts += 1
             rospy.loginfo("Pick attempt: " +  str(n_attempts))
             rospy.sleep(0.2)
         
         # If the pick was successful, attempt the place operation   
-        if success:
-            success = False
+        if result == MoveItErrorCodes.SUCCESS:
+            result = None
             n_attempts = 0
             
             # Generate valid place poses
             places = self.make_places(place_pose)
             
             # Repeat until we succeed or run out of attempts
-            while success == False and n_attempts < max_place_attempts:
+            while result != MoveItErrorCodes.SUCCESS and n_attempts < max_place_attempts:
                 for place in places:
-                    success = right_arm.place(target_id, place)
-                    if success:
+                    result = right_arm.place(target_id, place)
+                    if result == MoveItErrorCodes.SUCCESS:
                         break
                 n_attempts += 1
                 rospy.loginfo("Place attempt: " +  str(n_attempts))
                 rospy.sleep(0.2)
                 
-            if not success:
+            if result != MoveItErrorCodes.SUCCESS:
                 rospy.loginfo("Place operation failed after " + str(n_attempts) + " attempts.")
         else:
             rospy.loginfo("Pick operation failed after " + str(n_attempts) + " attempts.")
@@ -321,7 +322,7 @@ class MoveItDemo:
         g.grasp_pose = initial_pose_stamped
     
         # Pitch angles to try
-        pitch_vals = [0, 0.1, -0.1, 0.2, -0.2, 0.4, -0.4]
+        pitch_vals = [0, 0.1, -0.1, 0.2, -0.2, 0.3, -0.3]
         
         # Yaw angles to try
         yaw_vals = [0]
@@ -371,10 +372,7 @@ class MoveItDemo:
         x_vals = [0, 0.005, 0.01, 0.015, -0.005, -0.01, -0.015]
         
         # A list of y shifts (meters) to try
-        y_vals = [0, 0.005, 0.01, 0.015, -0.005, -0.01, -0.015]       
-
-        # A list of pitch angles to try
-        #pitch_vals = [0, 0.005, -0.005, 0.01, -0.01, 0.02, -0.02]
+        y_vals = [0, 0.005, 0.01, 0.015, -0.005, -0.01, -0.015]
         
         pitch_vals = [0]
         
