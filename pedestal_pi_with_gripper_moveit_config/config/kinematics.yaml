@@ -1,5 +1,4 @@
 right_arm:
-  #kinematics_solver: pedestal_pi_with_gripper_right_arm_kinematics/IKFastKinematicsPlugin
   kinematics_solver: kdl_kinematics_plugin/KDLKinematicsPlugin
   kinematics_solver_search_resolution: 0.005
   kinematics_solver_timeout: 0.05
