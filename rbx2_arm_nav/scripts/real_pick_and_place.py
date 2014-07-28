@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
 """
-moveit_ik_demo.py - Version 0.1 2014-01-14
+    real_pick_and_place.py - Version 0.1 2014-01-14
     
-    Use inverse kinemtatics to move the end effector to a specified pose
+    Use the UBR-1 perception pipeline to detect an object on a table top and 
+    then control the arm to grasp the object and move it to a new location using
+    the MoveIt! pick-and-place functions.
     
     Created for the Pi Robot Project: http://www.pirobot.org
     Copyright (c) 2014 Patrick Goebel.  All rights reserved.
