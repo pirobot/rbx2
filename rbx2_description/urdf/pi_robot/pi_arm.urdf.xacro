@@ -17,7 +17,7 @@
       <origin xyz="0 0 0" rpy="${PI/2} 0 ${PI/2}" />
     </bioloid_F2_fixed>
     
-    <dynamixel_AX12_revolute parent="${side}_arm_shoulder_F2_0" name="${side}_arm_shoulder_pan" vlimit="3.14" llimit="-1.57" ulimit="1.57">
+    <dynamixel_AX12_revolute parent="${side}_arm_shoulder_F2_0" name="${side}_arm_shoulder_pan" vlimit="3.14" llimit="-2.09" ulimit="2.09">
       <origin xyz="0 0 0" rpy="0 0 0" />
       <axis xyz="0 1 0" />
     </dynamixel_AX12_revolute>
