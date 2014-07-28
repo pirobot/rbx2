@@ -1,5 +1,4 @@
 right_arm:
-  #kinematics_solver: pi_robot_right_arm_kinematics/IKFastKinematicsPlugin
   kinematics_solver: kdl_kinematics_plugin/KDLKinematicsPlugin
   kinematics_solver_attempts: 3
   kinematics_solver_search_resolution: 0.005
