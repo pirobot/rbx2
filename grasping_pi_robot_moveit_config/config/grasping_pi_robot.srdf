@@ -29,6 +29,22 @@
         <joint name="right_arm_shoulder_roll_joint" value="0.0204531" />
         <joint name="right_arm_wrist_flex_joint" value="0" />
     </group_state>
+    <group_state name="straight_forward" group="right_arm">
+        <joint name="right_arm_elbow_flex_joint" value="0" />
+        <joint name="right_arm_forearm_flex_joint" value="0" />
+        <joint name="right_arm_shoulder_lift_joint" value="-1.57" />
+        <joint name="right_arm_shoulder_pan_joint" value="0" />
+        <joint name="right_arm_shoulder_roll_joint" value="0" />
+        <joint name="right_arm_wrist_flex_joint" value="0" />
+    </group_state>
+    <group_state name="wave" group="right_arm">
+        <joint name="right_arm_elbow_flex_joint" value="-0.5112" />
+        <joint name="right_arm_forearm_flex_joint" value="0.2163" />
+        <joint name="right_arm_shoulder_lift_joint" value="-2.9636" />
+        <joint name="right_arm_shoulder_pan_joint" value="0" />
+        <joint name="right_arm_shoulder_roll_joint" value="0" />
+        <joint name="right_arm_wrist_flex_joint" value="-0.177" />
+    </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="right_end_effector" parent_link="right_gripper_link" group="right_gripper" />
     <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->

@@ -5,4 +5,4 @@ moveit_setup_assistant_config:
   SRDF:
     relative_path: config/grasping_pi_robot.srdf
   CONFIG:
-    generated_timestamp: 1406432402
+    generated_timestamp: 1406557921
