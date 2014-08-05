@@ -217,9 +217,9 @@ class MoveItDemo:
         
         # Repeat until we succeed or run out of attempts
         while result != MoveItErrorCodes.SUCCESS and n_attempts < max_pick_attempts:
-            result = right_arm.pick(target_id, grasps)
             n_attempts += 1
             rospy.loginfo("Pick attempt: " +  str(n_attempts))
+            result = right_arm.pick(target_id, grasps)
             rospy.sleep(0.2)
         
         # If the pick was successful, attempt the place operation   
@@ -232,12 +232,12 @@ class MoveItDemo:
             
             # Repeat until we succeed or run out of attempts
             while result != MoveItErrorCodes.SUCCESS and n_attempts < max_place_attempts:
+                n_attempts += 1
+                rospy.loginfo("Place attempt: " +  str(n_attempts))
                 for place in places:
                     result = right_arm.place(target_id, place)
                     if result == MoveItErrorCodes.SUCCESS:
                         break
-                n_attempts += 1
-                rospy.loginfo("Place attempt: " +  str(n_attempts))
                 rospy.sleep(0.2)
                 
             if result != MoveItErrorCodes.SUCCESS:
