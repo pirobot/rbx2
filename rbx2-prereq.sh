@@ -2,7 +2,7 @@
 
 # Install the prerequisites for the ROS By Example code, Volume 2
 
-sudo apt-get install ros-hydro-arbotix \
+sudo apt-get install ros-hydro-arbotix ros-hydro-move-base-msgs \
 ros-hydro-dynamixel-motor ros-hydro-rosbridge-suite \
 ros-hydro-mjpeg-server ros-hydro-rgbd-launch \
 ros-hydro-openni-camera ros-hydro-moveit-full \
@@ -18,4 +18,4 @@ ros-hydro-kobuki-gazebo-plugins ros-hydro-kobuki-gazebo \
 ros-hydro-smach ros-hydro-smach-ros ros-hydro-grasping-msgs \
 ros-hydro-executive-smach ros-hydro-smach-viewer \
 ros-hydro-robot-pose-publisher ros-hydro-tf2-web-republisher \
-graphviz-dev libgraphviz-dev gv python-scipy
+graphviz-dev libgraphviz-dev gv python-scipy sdformat
