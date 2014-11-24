@@ -1,5 +1,0 @@
-<launch>
-  <node pkg="rbx2_utils" type="laptop_battery.py" name="laptop_battery" output="screen">
-     <param name="acpi_path" value="/proc/acpi/battery/BAT1" />
-  </node>
-</launch>
