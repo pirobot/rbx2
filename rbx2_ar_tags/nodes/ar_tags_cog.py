@@ -24,7 +24,7 @@
 
 import rospy
 from geometry_msgs.msg import Point, PoseStamped
-from ar_track_alvar.msg import AlvarMarkers
+from ar_track_alvar_msgs.msg import AlvarMarkers
 
 class TagsCOG():
     def __init__(self):
