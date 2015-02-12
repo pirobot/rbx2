@@ -34,7 +34,7 @@ class TagsCOG():
         self.tag_ids = rospy.get_param('~tag_ids', None)
         
         # Publish the COG on the /target_pose topic as a PoseStamped message
-        self.tag_pub = rospy.Publisher("target_pose", PoseStamped)
+        self.tag_pub = rospy.Publisher("target_pose", PoseStamped, queue_size=5)
 
         rospy.Subscriber("ar_pose_marker", AlvarMarkers, self.get_tags)
         
