@@ -64,13 +64,13 @@ class BatterySimulator():
         self.mutex = thread.allocate_lock()
         
         # Create the battery level publisher
-        battery_level_pub = rospy.Publisher("battery_level", Float32)
+        battery_level_pub = rospy.Publisher("battery_level", Float32, queue_size=5)
         
         # A service to maually set the battery level
         rospy.Service('~set_battery_level', SetBatteryLevel, self.SetBatteryLevelHandler)
 
         # Create a diagnostics publisher
-        diag_pub = rospy.Publisher("diagnostics", DiagnosticArray)
+        diag_pub = rospy.Publisher("diagnostics", DiagnosticArray, queue_size=5)
         
         # Create a dynamic_reconfigure server and set a callback function
         dyn_server = dynamic_reconfigure.server.Server(BatterySimulatorConfig, self.dynamic_reconfigure_callback)
