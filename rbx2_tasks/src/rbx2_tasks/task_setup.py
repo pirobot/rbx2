@@ -105,7 +105,7 @@ def setup_task_environment(self):
     init_docking_station_marker(self)
         
     # Publisher to manually control the robot (e.g. to stop it)
-    self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist)
+    self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=5)
     
     rospy.loginfo("Starting Tasks")
     
@@ -127,7 +127,7 @@ def init_waypoint_markers(self):
     marker_color = {'r': 1.0, 'g': 0.7, 'b': 1.0, 'a': 1.0}
     
     # Define a marker publisher.
-    self.marker_pub = rospy.Publisher('waypoint_markers', Marker)
+    self.marker_pub = rospy.Publisher('waypoint_markers', Marker, queue_size=5)
     
     # Initialize the marker points list.
     self.waypoint_markers = Marker()
@@ -155,7 +155,7 @@ def init_docking_station_marker(self):
     marker_id = 0
     marker_color = {'r': 0.7, 'g': 0.7, 'b': 0.0, 'a': 1.0}
     
-    self.docking_station_marker_pub = rospy.Publisher('docking_station_marker', Marker)
+    self.docking_station_marker_pub = rospy.Publisher('docking_station_marker', Marker, queue_size=5)
     
     self.docking_station_marker = Marker()
     self.docking_station_marker.ns = marker_ns
