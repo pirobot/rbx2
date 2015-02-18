@@ -41,7 +41,7 @@ class VacuumFloor(State):
         self.task = 'vacuum_floor'
         self.room = room
         self.timer = timer
-        self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist)
+        self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=5)
 
     def execute(self, userdata):
         rospy.loginfo('Vacuuming the floor in the ' + str(self.room))
@@ -74,7 +74,7 @@ class MopFloor(State):
         self.task = 'mop_floor'
         self.room = room
         self.timer = timer
-        self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist)
+        self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=5)
    
     def execute(self, userdata):
         rospy.loginfo('Mopping the floor in the ' + str(self.room))
@@ -105,7 +105,7 @@ class ScrubTub(State):
         self.task = 'scrub_tub'
         self.room = room
         self.timer = timer
-        self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist)
+        self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=5)
 
     def execute(self, userdata):
         rospy.loginfo('Cleaning the tub...')
