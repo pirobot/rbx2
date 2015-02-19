@@ -33,7 +33,7 @@ class Vacuum(Task):
         self.room = room
         self.counter = timer
         self.finished = False
-        self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist)
+        self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=5)
         self.cmd_vel_msg = Twist()
         self.cmd_vel_msg.linear.x = 0.05
 
@@ -65,7 +65,7 @@ class Mop(Task):
         self.room = room
         self.counter = timer
         self.finished = False
-        self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist)
+        self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=5)
         self.cmd_vel_msg = Twist()
         self.cmd_vel_msg.linear.x = 0.05
         self.cmd_vel_msg.angular.z = 1.2
@@ -97,7 +97,7 @@ class Scrub(Task):
         self.room = room
         self.finished = False
         self.counter = timer
-        self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist)
+        self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=5)
         self.cmd_vel_msg = Twist()
         self.cmd_vel_msg.linear.x = 0.3
         self.cmd_vel_msg.angular.z = 0.2
