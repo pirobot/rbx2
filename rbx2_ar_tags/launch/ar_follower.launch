@@ -1,7 +1,6 @@
 <launch>
   
-  <node pkg="rbx2_ar_tags" name="ar_follower" type="ar_follower.py" output="screen">
-    <rosparam command="delete" param="/ar_follower" />
+  <node pkg="rbx2_ar_tags" name="ar_follower" type="ar_follower.py" clear_params="true" output="screen">
     <rosparam>
        rate: 10
        max_x: 20.0
