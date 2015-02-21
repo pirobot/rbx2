@@ -15,7 +15,7 @@
   </node>
   
   <!-- Run a separate driver for the one sided gripper -->
-  <node name="right_gripper_controller" pkg="arbotix_controllers" type="gripper_controller" output="screen">
+  <node name="right_gripper_controller" pkg="arbotix_controllers" type="gripper_controller" clear_params="true" output="screen">
       <rosparam>
          model: singlesided
          invert: true
