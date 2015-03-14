@@ -23,7 +23,7 @@
 
 import rospy
 from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus, KeyValue
-from linux_hardware.msg import LaptopChargeStatus
+from smart_battery_msgs.msg import SmartBatteryStatus 
 
 class MonitorLaptopCharge():
     def __init__(self):
@@ -34,10 +34,10 @@ class MonitorLaptopCharge():
         self.error_percent = rospy.get_param("~error_percent", 20)
         
         # A diagnostics publisher
-        self.diag_pub = rospy.Publisher('diagnostics', DiagnosticArray)
+        self.diag_pub = rospy.Publisher('diagnostics', DiagnosticArray, queue_size=5)
         
         # Subscribe to the laptop_charge topic
-        rospy.Subscriber('laptop_charge', LaptopChargeStatus, self.pub_diagnostics)
+        rospy.Subscriber('laptop_charge', SmartBatteryStatus, self.pub_diagnostics)
         
         rospy.loginfo("Monitoring laptop charge...")
             
