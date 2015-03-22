@@ -38,7 +38,7 @@ class PubFrame():
         target_frame = rospy.get_param('~target_frame', 'right_gripper_link')
 
         # The target pose publisher
-        target_pub = rospy.Publisher('target_pose', PoseStamped)
+        target_pub = rospy.Publisher('target_pose', PoseStamped, queue_size=5)
         
         # Define the target as a PoseStamped message
         target = PoseStamped()

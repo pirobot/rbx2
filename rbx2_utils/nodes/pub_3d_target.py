@@ -60,10 +60,10 @@ class Pub3DTarget():
         dyn_client = dynamic_reconfigure.client.Client("pub_3d_target", timeout=60)
 
         # The target pose publisher
-        target_pub = rospy.Publisher('target_pose', PoseStamped)
+        target_pub = rospy.Publisher('target_pose', PoseStamped, queue_size=5)
         
         # The marker publisher so we can view the target in RViz
-        marker_pub = rospy.Publisher('target_marker', Marker)
+        marker_pub = rospy.Publisher('target_marker', Marker, queue_size=5)
         
         # Parameters for publishing target marker
         marker_scale = rospy.get_param('~marker_scale', 0.1)
