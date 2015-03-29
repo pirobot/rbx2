@@ -17,12 +17,12 @@
   <build_depend>roscpp</build_depend>
   <build_depend>rospy</build_depend>
   <build_depend>diagnostic_msgs</build_depend>
-  <build_depend>linux_hardware</build_depend>
+  <build_depend>smart_battery_msgs</build_depend>
 
   <!-- Dependencies needed after this package is compiled. -->
   <run_depend>roscpp</run_depend>
   <run_depend>rospy</run_depend>
   <run_depend>diagnostic_msgs</run_depend>
-  <run_depend>linux_hardware</run_depend>
+  <run_depend>smart_battery_msgs</run_depend>
 
 </package>
