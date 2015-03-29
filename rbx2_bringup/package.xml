@@ -19,6 +19,7 @@
   <build_depend>dynamixel_controllers</build_depend>
   <build_depend>dynamixel_driver</build_depend>
   <build_depend>dynamixel_msgs</build_depend>
+  <build_depend>smart_battery_msgs</build_depend>
 
   <!-- Dependencies needed after this package is compiled. -->
   <run_depend>roscpp</run_depend>
@@ -26,5 +27,6 @@
   <run_depend>dynamixel_controllers</run_depend>
   <run_depend>dynamixel_driver</run_depend>
   <run_depend>dynamixel_msgs</run_depend>
+  <run_depend>smart_battery_msgs</run_depend>
 
 </package>
