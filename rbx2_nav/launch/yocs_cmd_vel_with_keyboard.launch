@@ -4,7 +4,7 @@
   <node pkg="nodelet" type="nodelet" name="$(arg robot_name)_nodelet_manager" args="manager"/>
 
   <node pkg="nodelet" type="nodelet" name="cmd_vel_mux"
-        args="load yocs_cmd_vel_mux/CmdVelMuxNodelet $(arg robot_name)_nodelet_manager">
+        args="load yocs_cmd_vel_mux/CmdVelMuxNodelet $(arg robot_name)_nodelet_manager" clear_params="true" output="screen">
     <param name="yaml_cfg_file"  value="$(find rbx2_nav)/config/yocs_cmd_vel_with_keyboard.yaml"/>
     <remap from="cmd_vel_mux/output/cmd_vel" to="/cmd_vel"/>
   </node>
