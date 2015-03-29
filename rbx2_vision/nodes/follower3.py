@@ -3,7 +3,7 @@
 """
     follower3.py - Version 1.0 2012-06-01
     
-    Follow the region publishedon the /roi topic by adding depth info.
+    Follow the region published on the /roi topic by adding depth info.
     
     Based on the follower application by Tony Pratkanis at:
     
