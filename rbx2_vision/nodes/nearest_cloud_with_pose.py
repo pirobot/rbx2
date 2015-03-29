@@ -48,7 +48,7 @@ class NearestCloud():
 
 
         # Define the target publisher
-        self.target_pub = rospy.Publisher('target_pose', PoseStamped)
+        self.target_pub = rospy.Publisher('target_pose', PoseStamped, queue_size=5)
         
         rospy.Subscriber('point_cloud', PointCloud2, self.get_nearest_cloud)
         
