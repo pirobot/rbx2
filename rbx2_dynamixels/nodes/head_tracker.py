@@ -255,7 +255,7 @@ class HeadTracker():
             self.servo_speed[joint](self.default_joint_speed)
 
             # The position controllers
-            self.servo_position[joint] = rospy.Publisher('/' + joint + '/command', Float64)
+            self.servo_position[joint] = rospy.Publisher('/' + joint + '/command', Float64, queue_size=5)
             
             # A service to relax (disable torque) a servo
             if CONTROLLER_TYPE == 'arbotix':
