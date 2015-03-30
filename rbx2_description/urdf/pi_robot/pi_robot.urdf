@@ -357,7 +357,7 @@
   <joint name="right_arm_shoulder_pan_joint" type="revolute">
     <origin rpy="0 0 0" xyz="0 0 0"/>
     <axis xyz="0 1 0"/>
-    <limit effort="1.0" lower="-1.57" upper="1.57" velocity="3.14"/>
+    <limit effort="1.0" lower="-2.09" upper="2.09" velocity="3.14"/>
     <parent link="right_arm_shoulder_F2_0_link"/>
     <child link="right_arm_shoulder_pan_link"/>
   </joint>
