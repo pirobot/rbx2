@@ -23,7 +23,7 @@
 """
 
 import rospy
-from ar_track_alvar.msg import AlvarMarkers
+from ar_track_alvar_msgs.msg import AlvarMarkers
 from geometry_msgs.msg import Twist
 from math import copysign
 
@@ -70,7 +70,7 @@ class ARFollower():
         self.min_linear_speed = rospy.get_param("~min_linear_speed", 0.1)
 
         # Publisher to control the robot's movement
-        self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist)
+        self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=5)
         
         # Intialize the movement command
         self.move_cmd = Twist()
