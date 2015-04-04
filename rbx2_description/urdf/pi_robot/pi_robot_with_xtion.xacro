@@ -9,7 +9,7 @@
    
    <property name="camera_offset_x" value="0.009" />
    <property name="camera_offset_y" value="0.0045" />
-   <property name="camera_offset_z" value="0.897" />
+   <property name="camera_offset_z" value="0.917" />
 
    <!-- The following include files set up definitions of parts of the robot body -->
    <xacro:include filename="$(find rbx2_description)/urdf/materials.urdf.xacro" />

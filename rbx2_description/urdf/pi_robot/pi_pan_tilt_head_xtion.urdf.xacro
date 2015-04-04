@@ -4,7 +4,7 @@
 
   <property name="camera_offset_x" value="0.0" />
   <property name="camera_offset_y" value="0.0" />
-  <property name="camera_offset_z" value="0.04" />
+  <property name="camera_offset_z" value="0.06" />
    
   <property name="camera_mesh_scale" value="1.0" />
    

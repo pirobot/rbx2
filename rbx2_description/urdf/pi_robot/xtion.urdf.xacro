@@ -20,7 +20,7 @@
       </joint>
       <link name="${name}_link">
          <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <origin xyz="0 0 -0.02" rpy="0 0 0"/>
             <geometry>
                <mesh filename="package://rbx2_description/meshes/xtion.stl" scale="${camera_mesh_scale} ${camera_mesh_scale} ${camera_mesh_scale}" />
             </geometry>
