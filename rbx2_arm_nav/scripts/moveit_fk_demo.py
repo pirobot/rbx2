@@ -33,7 +33,7 @@ class MoveItDemo:
         # Initialize the ROS node
         rospy.init_node('moveit_demo', anonymous=True)
         
-        GRIPPER_OPEN = [0.04]
+        GRIPPER_OPEN = [0.05]
         GRIPPER_CLOSED = [-0.03]
         GRIPPER_NEUTRAL = [0.01]
  
