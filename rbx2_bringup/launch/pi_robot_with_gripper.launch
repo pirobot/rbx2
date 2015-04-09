@@ -26,6 +26,8 @@
          center: 0.0
          pad_width: 0.004
          finger_length: 0.065
+         min_opening: -0.8
+         max_opening: 0.5
          joint: right_gripper_finger_joint
       </rosparam>
    </node>
