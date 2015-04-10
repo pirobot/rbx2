@@ -60,7 +60,7 @@ class MoveItDemo:
         # Initialize the move group for the right gripper
         right_gripper = MoveGroupCommander(GROUP_NAME_GRIPPER)
                                 
-        # Increase the planning time since contraint planning can take a while
+        # Increase the planning time since constraint planning can take a while
         right_arm.set_planning_time(15)
                         
         # Allow replanning to increase the odds of a solution
