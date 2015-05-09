@@ -2,21 +2,22 @@
 
 # Install the prerequisites for the ROS By Example code, Volume 2
 
-sudo apt-get install ros-hydro-arbotix \
-ros-hydro-dynamixel-motor ros-hydro-rosbridge-suite \
-ros-hydro-mjpeg-server ros-hydro-rgbd-launch \
-ros-hydro-openni-camera ros-hydro-moveit-full \
-ros-hydro-turtlebot-* ros-hydro-kobuki-* ros-hydro-moveit-python \
+sudo apt-get install ros-indigo-arbotix ros-indigo-openni-camera \
+ros-indigo-dynamixel-motor ros-indigo-rosbridge-suite \
+ros-indigo-mjpeg-server ros-indigo-rgbd-launch \
+ros-indigo-moveit-full ros-indigo-moveit-ikfast \
+ros-indigo-turtlebot-* ros-indigo-kobuki-* ros-indigo-moveit-python \
 python-pygraph python-pygraphviz python-easygui \
-mini-httpd ros-hydro-laser-pipeline ros-hydro-ar-track-alvar \
-ros-hydro-laser-filters ros-hydro-hokuyo-node \
-ros-hydro-depthimage-to-laserscan ros-hydro-moveit-ikfast \
-ros-hydro-gazebo-ros ros-hydro-gazebo-ros-pkgs \
-ros-hydro-gazebo-msgs ros-hydro-gazebo-plugins \
-ros-hydro-gazebo-ros-control ros-hydro-cmake-modules \
-ros-hydro-kobuki-gazebo-plugins ros-hydro-kobuki-gazebo \
-ros-hydro-smach ros-hydro-smach-ros ros-hydro-grasping-msgs \
-ros-hydro-executive-smach ros-hydro-smach-viewer \
-ros-hydro-robot-pose-publisher ros-hydro-tf2-web-republisher \
-ros-hydro-move-base-msgs ros-hydro-fake-localization \
-graphviz-dev libgraphviz-dev gv python-scipy sdformat
+mini-httpd ros-indigo-laser-pipeline ros-indigo-ar-track-alvar \
+ros-indigo-laser-filters ros-indigo-hokuyo-node \
+ros-indigo-depthimage-to-laserscan ros-indigo-moveit-ikfast \
+ros-indigo-gazebo-ros ros-indigo-gazebo-ros-pkgs \
+ros-indigo-gazebo-msgs ros-indigo-gazebo-plugins \
+ros-indigo-gazebo-ros-control ros-indigo-cmake-modules \
+ros-indigo-kobuki-gazebo-plugins ros-indigo-kobuki-gazebo \
+ros-indigo-smach ros-indigo-smach-ros ros-indigo-grasping-msgs \
+ros-indigo-executive-smach ros-indigo-smach-viewer \
+ros-indigo-robot-pose-publisher ros-indigo-tf2-web-republisher \
+ros-indigo-move-base-msgs ros-indigo-fake-localization \
+graphviz-dev libgraphviz-dev gv python-scipy liburdfdom-tools \
+ros-indigo-laptop-battery-monitor ros-indigo-ar-track-alvar*
