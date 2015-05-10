@@ -3,12 +3,14 @@
   <rosparam ns="/robot_gui">
      maxLinearSpeed: 0.5
      maxAngularSpeed: 2.0
-     videoTopic: /camera/rgb/image_color
+     videoTopic: /camera/rgb/image_raw
   </rosparam>
 
   <node name="mini_httpd" pkg="rbx2_gui" type="mini-httpd.sh" output="screen" />
 
-  <node name="web_video_server" pkg="web_video_server" type="web_video_server" output="screen" />
+  <node name="web_video_server" pkg="web_video_server" type="web_video_server" output="screen">
+     <param name="port" value="8080" />
+  </node>
 
   <node name="robot_pose_publisher" pkg="robot_pose_publisher" type="robot_pose_publisher" output="screen" />
   
