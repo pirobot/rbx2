@@ -36,7 +36,7 @@ var serverURL = "ws://" + rosbridgeHost + ":" + rosbridgePort;
 var mjpegViewer;
 
 // The default video topic (can be set in the rosbridge launch file)
-var videoTopic = "/camera/rgb/image_raw";
+var videoTopic = "/camera/rgb/image_color";
 
 // The mjpeg video quality (percent)
 var videoQuality = 50;

@@ -18,13 +18,11 @@
   <build_depend>rospy</build_depend>
   <build_depend>geometry_msgs</build_depend>
   <build_depend>ar_track_alvar</build_depend>
-  <build_depend>ar_track_alvar_msgs</build_depend>
 
   <!-- Dependencies needed after this package is compiled. -->
   <run_depend>roscpp</run_depend>
   <run_depend>rospy</run_depend>
   <run_depend>geometry_msgs</run_depend>
   <run_depend>ar_track_alvar</run_depend>
-  <run_depend>ar_track_alvar_msgs</run_depend>
 
 </package>

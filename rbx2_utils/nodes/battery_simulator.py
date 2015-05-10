@@ -48,8 +48,9 @@ class BatterySimulator():
         # Error battery level for diagnostics
         self.error_battery_level = rospy.get_param("~error_battery_level", 20)
         
-        # Warn battery level for diagnostics
+          # Warn battery level for diagnostics
         self.warn_battery_level = rospy.get_param("~warn_battery_level", 50)      
+        
         # Initialize the current level variable to the startup level
         self.current_battery_level = self.initial_battery_level
         
@@ -130,3 +131,6 @@ class BatterySimulator():
 
 if __name__ == '__main__':
     BatterySimulator()
+
+    
+    

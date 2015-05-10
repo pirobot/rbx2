@@ -1,8 +1,8 @@
 <launch>
-  <arg name="battery" default="/proc/acpi/battery" />
-  
-  <node pkg="laptop_battery_monitor" name="laptop_battery" type="laptop_battery.py" output="screen">
-     <param name="acpi_path" type="string" value="$(arg battery)" />
+  <node pkg="rbx2_bringup" name="laptop_battery" type="laptop_battery.py" output="screen">
+     <rosparam>
+        rate: 1
+        battery_number: 1
+     </rosparam>
   </node>
-  
 </launch>

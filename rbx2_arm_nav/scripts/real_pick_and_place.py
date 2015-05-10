@@ -104,10 +104,10 @@ class MoveItDemo:
         scene = PlanningSceneInterface("base_link")
         
         # Create a scene publisher to push changes to the scene
-        self.scene_pub = rospy.Publisher('planning_scene', PlanningScene, queue_size=5)
+        self.scene_pub = rospy.Publisher('planning_scene', PlanningScene)
         
         # Create a publisher for displaying gripper poses
-        self.gripper_pose_pub = rospy.Publisher('gripper_pose', PoseStamped, queue_size=5)
+        self.gripper_pose_pub = rospy.Publisher('gripper_pose', PoseStamped)
         
         # Create a dictionary to hold object colors
         self.colors = dict()
