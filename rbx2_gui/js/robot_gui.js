@@ -78,7 +78,7 @@ var options = {
     //robotBatteryTopic: '/arduino/sensor/main_voltage',
 
     // Video parameters
-    videoTopic: '/camera/rgb/image_color',
+    videoTopic: '/camera/rgb/image_raw',
     videoQuality: 50,
     fovWidthRadians: 0.99, // Asus 57 degrees
     fovHeightRadians: 0.78 // Asus 45 degrees
@@ -436,6 +436,16 @@ function getParam(param) {
     });
 }
 
+function setParam() {
+    var paramName = document.getElementById('setParamName');
+    var paramValue = document.getElementById('setParamValue');
+    var param = new ROSLIB.Param({
+	ros : ros,
+	name : param_ns + '/' + paramName.value
+    });
+    param.set(parseFloat(paramValue.value));
+}
+
 function setGUIParam() {
     var paramName = document.getElementById('setParamName');
     var paramValue = document.getElementById('setParamValue');
@@ -478,16 +488,17 @@ function loadTopics() {
 	    var topicType;
 	    var topicTypeLabel = document.getElementById('topicType');
 	    var item = $('#topicListPullDown').jqxDropDownList('getItem', args.index);
-	    /* Does not appear to work
+/*
 	    if (item != null) {
-		ros.getType(function(topic, callback) {
-		    topicTypeLabel.value = result.type; 
+		topicTypeLabel.innerHTML = item.value
 		});
 	    }
+
 	    function callback(result) {
-		topicTypeLabel.value = result.type; 
+	    	topicTypeLabel.value = result.type; 
 	    }
-	    */
+*/
+
 	});
     });
 }
