@@ -6,3 +6,4 @@
   <!-- load controller_list -->
   <rosparam file="$(find pi_robot_moveit_config)/config/controllers.yaml"/>
 </launch>
+

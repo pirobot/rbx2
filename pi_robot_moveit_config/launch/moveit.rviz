@@ -10,7 +10,7 @@ Panels:
         - /MotionPlanning1/Planning Request1
         - /MotionPlanning1/Planned Path1
       Splitter Ratio: 0.74256
-    Tree Height: 250
+    Tree Height: 271
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
@@ -24,7 +24,7 @@ Visualization Manager:
     - Alpha: 0.5
       Cell Size: 1
       Class: rviz/Grid
-      Color: 160; 160; 164
+      Color: 0; 0; 0
       Enabled: true
       Line Style:
         Line Width: 0.03
@@ -41,7 +41,9 @@ Visualization Manager:
       Value: true
     - Class: moveit_rviz_plugin/MotionPlanning
       Enabled: true
+      Move Group Namespace: ""
       MoveIt_Goal_Tolerance: 0
+      MoveIt_Planning_Attempts: 10
       MoveIt_Planning_Time: 5
       MoveIt_Use_Constraint_Aware_IK: true
       MoveIt_Warehouse_Host: 127.0.0.1
@@ -255,7 +257,7 @@ Visualization Manager:
         Show Robot Visual: true
         Show Trail: false
         State Display Time: 0.05 s
-        Trajectory Topic: /move_group/display_planned_path
+        Trajectory Topic: move_group/display_planned_path
       Planning Metrics:
         Payload: 1
         Show Joint Torques: false
@@ -275,7 +277,7 @@ Visualization Manager:
         Show Workspace: false
         Start State Alpha: 1
         Start State Color: 0; 255; 0
-      Planning Scene Topic: /move_group/monitored_planning_scene
+      Planning Scene Topic: move_group/monitored_planning_scene
       Robot Description: robot_description
       Scene Geometry:
         Scene Alpha: 1
@@ -493,7 +495,7 @@ Visualization Manager:
       Value: true
   Enabled: true
   Global Options:
-    Background Color: 121; 121; 121
+    Background Color: 163; 163; 163
     Fixed Frame: base_footprint
     Frame Rate: 30
   Name: root
@@ -505,37 +507,37 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Class: rviz/Orbit
-      Distance: 1.64066
+      Class: rviz/XYOrbit
+      Distance: 2.28707
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.00271369
-        Y: -0.0780067
-        Z: 0.5759
+        X: -0.140661
+        Y: -0.121749
+        Z: -1.3411e-07
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.220398
+      Pitch: 0.429797
       Target Frame: base_footprint
-      Value: Orbit (rviz)
-      Yaw: 0.575404
+      Value: XYOrbit (rviz)
+      Yaw: 0.491764
     Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 804
+  Height: 931
   Help:
     collapsed: false
   Hide Left Dock: false
   Hide Right Dock: false
   Motion Planning:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000002a2000002c5fc0200000005fb000000100044006900730070006c00610079007301000000410000013b000000dd00fffffffb0000000800480065006c00700000000342000000bb0000007600fffffffb0000000a005600690065007700730000000124000000b0000000b000fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000182000001840000017400ffffff00000172000002c500000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000100000000000002b10000035dfc0200000005fb000000100044006900730070006c006100790073010000002800000150000000dd00fffffffb0000000800480065006c00700000000342000000bb0000007600fffffffb0000000a0056006900650077007300000003b0000000b0000000b000fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e0067010000017e00000207000001b600ffffff000001ab0000035d00000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Views:
     collapsed: false
-  Width: 1050
-  X: 868
-  Y: 92
+  Width: 1122
+  X: 670
+  Y: 133

@@ -4,7 +4,7 @@
 
   <!-- Launch the warehouse with a default database location -->  
   <include file="$(find pi_robot_moveit_config)/launch/warehouse.launch">
-    <arg name="moveit_warehouse_database_path" value="~/moveit_warehouse_database" />
+    <arg name="moveit_warehouse_database_path" value="$(find pi_robot_moveit_config)/default_warehouse_mongo_db" />
   </include>
 
   <!-- If we want to reset the database, run this node -->
