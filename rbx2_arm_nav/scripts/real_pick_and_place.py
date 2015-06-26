@@ -3,7 +3,7 @@
 """
     real_pick_and_place.py - Version 0.1 2014-01-14
     
-    Use the UBR-1 perception pipeline to detect an object on a table top and 
+    Use the simple_grasping perception pipeline to detect an object on a table top and 
     then control the arm to grasp the object and move it to a new location using
     the MoveIt! pick-and-place functions.
     
@@ -143,7 +143,7 @@ class MoveItDemo:
         # Give the scene a chance to catch up
         rospy.sleep(2)
         
-        # Connect to the UBR-1 find_objects action server
+        # Connect to the simple_grasping find_objects action server
         rospy.loginfo("Connecting to basic_grasping_perception/find_objects...")
         find_objects = actionlib.SimpleActionClient("basic_grasping_perception/find_objects", FindGraspableObjectsAction)
         find_objects.wait_for_server()
@@ -153,8 +153,8 @@ class MoveItDemo:
         rospy.sleep(1)
         
         # Start the arm in the "resting" pose stored in the SRDF file
-        right_arm.set_named_target('resting')
-        right_arm.go()
+        #right_arm.set_named_target('resting')
+        #right_arm.go()
         
         # Open the gripper to the neutral position
         right_gripper.set_joint_value_target(GRIPPER_NEUTRAL)
@@ -167,7 +167,7 @@ class MoveItDemo:
             # Initialize the grasping goal
             goal = FindGraspableObjectsGoal()
             
-            # We don't use the UBR-1 grasp planner as it does not work with our gripper
+            # We don't use the simple_grasping grasp planner as it does not work with our gripper
             goal.plan_grasps = False
             
             # Send the goal request to the find_objects action server which will trigger
