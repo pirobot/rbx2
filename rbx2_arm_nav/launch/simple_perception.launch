@@ -1,0 +1,17 @@
+<launch>
+
+  <!-- Start Perception -->
+  <node name="basic_grasping_perception" pkg="simple_grasping" type="basic_grasping_perception" output="screen">
+    <!-- finger tips are 30mm from virtual gripper_link used with Pi Robot
+         fingers are 60mm deep -->
+    <param name="tool_offset" value="0.0" />
+    <param name="finger_depth" value="0.020" />
+    <param name="gripper/gripper_tolerance" value="0.05" />
+    
+    <!-- Remap the point cloud topic for Pi Robot -->
+    <remap from="/head_camera/depth_registered/points" to="/camera/depth_registered/points" />
+
+  </node>
+
+</launch>
+
