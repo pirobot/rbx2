@@ -353,9 +353,15 @@ function setROSParam() {
 	var paramValue = document.getElementById('setParamValue');
 	var param = new ROSLIB.Param({
 		ros : ros,
-		name : param_ns + '/' + paramName.value
+		name : paramName.value
 	});
-	param.set(parseFloat(paramValue.value));
+	
+    if (isNumeric(paramValue.value)) {
+		param.set(parseFloat(paramValue.value));
+    }
+    else {
+    	param.set(paramValue.value);
+    }
 }
 
 function getROSParam() {
@@ -363,7 +369,7 @@ function getROSParam() {
 	var paramValue = document.getElementById('getParamValue');
 	var param = new ROSLIB.Param({
 		ros : ros,
-		name : param_ns + '/' + paramName.value
+		name : paramName.value
 	});
 	param.get(function(value) {
 		paramValue.value = value;
@@ -430,3 +436,6 @@ function sign(x) {
 	return 0;
 }
 
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}

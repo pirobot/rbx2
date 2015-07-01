@@ -204,21 +204,27 @@ ros.on('connection', function() {
     });
 
     deleteParamService = new ROSLIB.Service({
-	ros : ros,
-	name : '/rosapi/delete_param',
-	serviceType : 'rosapi/DeleteParam'
+		ros : ros,
+		name : '/rosapi/delete_param',
+		serviceType : 'rosapi/DeleteParam'
     });
 
     getParamService = new ROSLIB.Service({
-	ros : ros,
-	name : '/rosapi/get_param',
-	serviceType : 'rosapi/GetParam'
+		ros : ros,
+		name : '/rosapi/get_param',
+		serviceType : 'rosapi/GetParam'
+    });
+    
+    setParamService = new ROSLIB.Service({
+		ros : ros,
+		name : '/rosapi/set_param',
+		serviceType : 'rosapi/SetParam'
     });
 
     document.addEventListener('keydown', function (e) {
-	if (e.shiftKey) shiftKey = true;
-	else shiftKey = false;
-	setSpeed(e.keyCode);
+		if (e.shiftKey) shiftKey = true;
+		else shiftKey = false;
+		setSpeed(e.keyCode);
     }, true);
 
     document.addEventListener('keyup', function (e) {
@@ -437,34 +443,40 @@ function getParam(param) {
 }
 
 function setParam() {
-    var paramName = document.getElementById('setParamName');
+    var item = $('#setParamListPullDown').jqxDropDownList('getItem', args.index);
     var paramValue = document.getElementById('setParamValue');
     var param = new ROSLIB.Param({
-	ros : ros,
-	name : param_ns + '/' + paramName.value
+		ros : ros,
+		name : item.label
     });
-    param.set(parseFloat(paramValue.value));
+    
+    if (isNumeric(paramValue.value)) {
+		param.set(parseFloat(paramValue.value));
+    }
+    else {
+    	param.set(paramValue.value);
+    }
 }
 
 function setGUIParam() {
     var paramName = document.getElementById('setParamName');
     var paramValue = document.getElementById('setParamValue');
     var param = new ROSLIB.Param({
-	ros : ros,
-	name : param_ns + '/' + paramName.value
+		ros : ros,
+		name : param_ns + '/' + paramName.value
     });
-    param.set(parseFloat(paramValue.value));
+    param.set(paramValue.value);
 }
 
 function getGUIParam() {
     var paramName = document.getElementById('getParamName');
     var paramValue = document.getElementById('getParamValue');
     var param = new ROSLIB.Param({
-	ros : ros,
-	name : param_ns + '/' + paramName.value
+		ros : ros,
+		name : param_ns + '/' + paramName.value
     });
     param.get(function(value) {
-	paramValue.value = value;
+    	paramValue.value = value;
     });
 }
 
@@ -477,7 +489,7 @@ var topicTypeClient = new ROSLIB.Service({
 
 // The rosbridge getTopics() function runs asynchronously and takes a
 // callback function as an argument which in turn sets the "topics"
-// variable to the list (array) of topics. So we run ros.getTopics()
+// variable to the list (array) of topics. So we run ros.getTopics
 // with a function argument that populates the desired pulldown list
 // with the returned list of topics.
 function loadTopics() {
@@ -510,17 +522,14 @@ function loadParamNames() {
 	    var args = event.args;
 	    var item = $('#getParamListPullDown').jqxDropDownList('getItem', args.index);
 	    if (item != null) {
-		getParam(item.label);
+	    	getParam(item.label);
 	    }
 	});
 
 	$("#setParamListPullDown").jqxDropDownList({ source: params, selectedIndex: -1, width: '300', height: '25', theme: 'ui-start', placeHolder: "Select Parameter" });
 	$('#setParamListPullDown').on('select', function (event) {
 	    var args = event.args;
-	    var item = $('#setParamListPullDown').jqxDropDownList('getItem', args.index);
-	    if (item != null) {
-		setParam(item.label);
-	    }
+	    var item = $('#setParamListPullDown').jqxDropDownList('getItem', args.index);	    
 	});
     });
 }
@@ -529,14 +538,14 @@ function pubChatter(rate) {
     var message = document.getElementById('chatterMessage');
 
     var chatter = new ROSLIB.Topic({
-	ros : ros,
-	name : '/chatter',
-	messageType : 'std_msgs/String',
-	throttle_rate: 1
+    	ros : ros,
+    	name : '/chatter',
+    	messageType : 'std_msgs/String',
+    	throttle_rate: 1
     });
 
     var msg = new ROSLIB.Message({
-	data : message.value
+    	data : message.value
     });
 
     chatter.publish(msg);
@@ -546,22 +555,22 @@ function subChatter() {
     var subscribe = $("#subChatterButton").jqxToggleButton('toggled');
     var chatterData = document.getElementById('chatterData');
     var listener = new ROSLIB.Topic({
-	ros : ros,
-	name : '/chatter',
-	messageType : 'std_msgs/String'
+		ros : ros,
+		name : '/chatter',
+		messageType : 'std_msgs/String'
     });
 
     if (subscribe) {
-	console.log('Subscribed to ' + listener.name);
-	chatterSubscribed = true;
-	listener.subscribe(function(msg) {
-	    chatterData.innerHTML = msg.data;
-	});
+		console.log('Subscribed to ' + listener.name);
+		chatterSubscribed = true;
+		listener.subscribe(function(msg) {
+		    chatterData.innerHTML = msg.data;
+		});
     }
     else {
-	listener.unsubscribe();
-	chatterSubscribed = false;
-	console.log('Unsubscribed from ' + listener.name);
+		listener.unsubscribe();
+		chatterSubscribed = false;
+		console.log('Unsubscribed from ' + listener.name);
     }
 }
 
@@ -589,3 +598,7 @@ function sign(x)
     return 0;
 }
 
+
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
