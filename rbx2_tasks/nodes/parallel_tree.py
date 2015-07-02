@@ -76,7 +76,7 @@ class PrintMessage(Task):
     def run(self):
         try:
             word = self.words.pop(0)
-            print word
+            print word,
             time.sleep(0.1)
             if self.words == []:
                 return TaskStatus.SUCCESS
@@ -102,7 +102,7 @@ class Count(Task):
         else:
             time.sleep(0.1)
             self.count += 1
-            print self.count
+            print self.count,
             if self.count == self.number:
                         return TaskStatus.SUCCESS
             return TaskStatus.RUNNING
