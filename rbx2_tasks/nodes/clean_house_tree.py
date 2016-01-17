@@ -278,4 +278,4 @@ if __name__ == '__main__':
     try:
         CleanHouse()
     except rospy.ROSInterruptException:
-        rospy.loginfo("House clearning test finished.")
+        rospy.loginfo("House cleaning test finished.")
