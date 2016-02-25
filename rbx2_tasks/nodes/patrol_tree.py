@@ -123,6 +123,7 @@ class Patrol():
     
     def recharge_cb(self, result):
         rospy.loginfo("BATTERY CHARGED!")
+        return TaskStatus.SUCCESS
             
     def shutdown(self):
         rospy.loginfo("Stopping the robot...")
