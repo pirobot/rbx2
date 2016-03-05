@@ -32,7 +32,6 @@ from rbx2_tasks.clean_house_tasks_tree import *
 from collections import OrderedDict
 from math import pi, sqrt
 import time
-import easygui
 
 # A class to track global variables
 class BlackBoard():
