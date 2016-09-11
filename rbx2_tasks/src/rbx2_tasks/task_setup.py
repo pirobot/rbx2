@@ -40,7 +40,7 @@ def setup_task_environment(self):
     self.low_battery_threshold = rospy.get_param('~low_battery_threshold', 50)
     
     # How many times should we execute the patrol loop
-    self.n_patrols = rospy.get_param("~n_patrols", 2) # meters
+    self.n_patrols = rospy.get_param("~n_patrols", 2)
     
     # How long do we have to get to each waypoint?
     self.move_base_timeout = rospy.get_param("~move_base_timeout", 10) #seconds
