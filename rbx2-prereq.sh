@@ -10,7 +10,7 @@ ros-indigo-turtlebot-* ros-indigo-kobuki-* ros-indigo-moveit-python \
 python-pygraph python-pygraphviz python-easygui \
 mini-httpd ros-indigo-laser-pipeline ros-indigo-ar-track-alvar \
 ros-indigo-laser-filters ros-indigo-hokuyo-node \
-ros-indigo-depthimage-to-laserscan \
+ros-indigo-depthimage-to-laserscan ros-indigo-shape-msgs \
 ros-indigo-gazebo-ros ros-indigo-gazebo-ros-pkgs \
 ros-indigo-gazebo-msgs ros-indigo-gazebo-plugins \
 ros-indigo-gazebo-ros-control ros-indigo-cmake-modules \
