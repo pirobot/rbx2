@@ -18,9 +18,7 @@
   <macro name="wheel" params="suffix parent reflect color">
     <joint name="${parent}_${suffix}_wheel_joint" type="continuous">
       <axis xyz="0 0 1" />
-      <limit effort="100" velocity="100"/>
-      <safety_controller k_velocity="10" />
-      <origin xyz="${wheel_offset_x} ${reflect*wheel_offset_y} ${wheel_offset_z}" rpy="${reflect*PI/2} 0 0" />
+      <origin xyz="0 ${reflect*wheel_offset_y} 0" rpy="${reflect*PI/2} 0 0" />
       <parent link="${parent}_link"/>
       <child link="${parent}_${suffix}_wheel_link"/>
     </joint>
@@ -39,14 +37,14 @@
   <macro name="base" params="name color">
     <link name="${name}_link">
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 0" />
+        <origin xyz="${-wheel_offset_x} 0 ${-wheel_offset_z}" rpy="0 0 0" />
         <geometry>
           <box size="${base_size_x} ${base_size_y} ${base_size_z}" />
         </geometry>
         <material name="${color}" />
       </visual>
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 0" />
+        <origin xyz="${-wheel_offset_x} 0 ${-wheel_offset_z}" rpy="0 0 0" />
         <geometry>
           <box size="${base_size_x} ${wheel_offset_y*2 + wheel_length} ${base_size_z}" />
         </geometry>
@@ -65,9 +63,9 @@
   </link>
   
   <joint name="base_joint" type="fixed">
-    <origin xyz="0 0 ${base_size_z/2 - wheel_offset_z}" rpy="0 0 0" />        
-    <parent link="base_footprint"/>
-    <child link="base_link" />
+    <origin xyz="0 0 ${-wheel_radius}" rpy="0 0 0" />
+    <parent link="base_link" />     
+    <child link="base_footprint"/>
   </joint>
 
    <!-- Add the drive wheels -->
