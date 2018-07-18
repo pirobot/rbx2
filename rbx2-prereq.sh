@@ -5,7 +5,7 @@
 sudo apt-get install ros-kinetic-arbotix ros-kinetic-openni-camera \
 ros-kinetic-dynamixel-motor ros-kinetic-rosbridge-suite \
 ros-kinetic-web-video-server ros-kinetic-rgbd-launch \
-ros-kinetic-moveit \
+ros-kinetic-moveit ros-kinetic-manipulation-msgs \
 ros-kinetic-turtlebot-* ros-kinetic-kobuki-* ros-kinetic-moveit-python \
 python-pygraph python-pygraphviz python-easygui \
 mini-httpd ros-kinetic-laser-pipeline ros-kinetic-ar-track-alvar \
