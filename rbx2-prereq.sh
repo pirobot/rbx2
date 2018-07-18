@@ -4,12 +4,12 @@
 
 sudo apt-get install ros-kinetic-arbotix ros-kinetic-openni-camera \
 ros-kinetic-dynamixel-motor ros-kinetic-rosbridge-suite \
-ros-kinetic-mjpeg-server ros-kinetic-rgbd-launch \
-ros-kinetic-moveit ros-kinetic-moveit-ikfast \
+ros-kinetic-web-video-server ros-kinetic-rgbd-launch \
+ros-kinetic-moveit \
 ros-kinetic-turtlebot-* ros-kinetic-kobuki-* ros-kinetic-moveit-python \
 python-pygraph python-pygraphviz python-easygui \
 mini-httpd ros-kinetic-laser-pipeline ros-kinetic-ar-track-alvar \
-ros-kinetic-laser-filters ros-kinetic-hokuyo-node \
+ros-kinetic-laser-filters \
 ros-kinetic-depthimage-to-laserscan ros-kinetic-shape-msgs \
 ros-kinetic-gazebo-ros ros-kinetic-gazebo-ros-pkgs \
 ros-kinetic-gazebo-msgs ros-kinetic-gazebo-plugins \
