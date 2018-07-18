@@ -85,7 +85,7 @@
     </dynamixel_AX12_revolute>
     
     <bioloid_F3_fixed parent="${side}_arm_wrist_flex" name="${side}_arm_wrist_F3_bracket" color="${color}">
-      <origin xyz="0 0 ${-(AX12_DEPTH + F3_HEIGHT)/2)}" rpy="${PI} 0 0" />
+      <origin xyz="0 0 ${-(AX12_DEPTH + F3_HEIGHT)/2}" rpy="${PI} 0 0" />
     </bioloid_F3_fixed>
     
     <!-- gripper attach -->
